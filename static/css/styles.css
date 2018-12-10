@@ -1,0 +1,27 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+.container{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -50px;
+    margin-left: -100px;
+}
+
+.questionContainer{
+    width: 50%;
+    margin: 0 auto;
+    text-align: center; 
+}
+
+#questionBtn{
+    background: transparent;
+    border: none !important;
+}
+
+.singleQuestion{
+    margin-bottom: 10px;
+}
