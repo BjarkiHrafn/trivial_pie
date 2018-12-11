@@ -4,14 +4,13 @@
     <div class="questionContainer">
         <form action = "{{ url_for('PostAnswer')}}" method = "post" id="questionForm">
                 <button type="submit" name="menu">Menu</button>
-                {% for dict_item in msg %}
-                    {% for key, item in dict_item.items() %}
-                        <div class="singleQuestion"><i>{{key}}</i></div>
-                        {% for i in item %}
-                            <div class="questionOption"><button type="submit" name="ans" value="{{dict_item}}" id="questionBtn">{{i}}</button></div>
-                        {% endfor %}
-                    {% endfor %}
+                <input type="checkbox" name="goodQuestion" >good question!</input>
+                
+                <div class="singleQuestion"><i>{{msg.title}}</i></div>
+                {% for dict_item in msg.options %}
+                        <div class="questionOption"><input type="radio" name="ans" value="{{dict_item}}" id="questionBtn">{{dict_item[0]}}</input></div>
                 {% endfor %}
+                <button type="submit" name="submitAns" value={{msg}}>submit</button>
         </form>
     </div>
     

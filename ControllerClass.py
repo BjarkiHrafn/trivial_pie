@@ -2,9 +2,11 @@ from scrapewiki import QuestionMaker
 
 
 class Controller(object):
+    
     answer = ""
-    def __init__(self):
-        self.answer = []
+    goodQuestions = []
+    #def __init__(self):
+    #    self.answer = answer
 
     def DeployQuestion(self):
 
@@ -12,7 +14,7 @@ class Controller(object):
             questionObject = QuestionMaker()
             questionObject = questionObject.quiz()
             
-            print(questionObject)
+            return questionObject
         except ValueError:
             return "Something went wrong"
         '''
@@ -26,6 +28,5 @@ class Controller(object):
     def ProcessAnswer(self):
         print(self.answer)
 
-
-con = Controller()
-con.DeployQuestion()
+#con = Controller()
+#con.DeployQuestion()
