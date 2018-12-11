@@ -14,12 +14,16 @@ class repository(object):
         client = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
         self.db = client.get_database("pie")
         self.goodQuestions = self.db.goodQuestions
+        self.survivalHighScore = self.db.survivalHighScore
+        self.quizHighScore = self.db.quizHighScore
 
     def getAllGoodQuestionsInOrderOfBestQuestions(self):
-        testVals = []
+        goodQuestionLis = []
         for document in self.goodQuestions.find().sort('points', pymongo.DESCENDING):
-            testVals.append(document)
-        return testVals
+            goodQuestionLis.append(document)
+        return goodQuestionLis
+
+    ### --- Good Questions --- ###
 
     # adds a question to the goodQuestions collection
     # if question already exists only increments the
@@ -39,12 +43,24 @@ class repository(object):
         question = self.goodQuestions.find_one({"title": title})
         return question
 
+    ### --- Hich Score --- ###
 
-# test
-rep = repository()
+    def getSurvivalHighscore(self):
+        highScoreLis = []
+        for document in self.survivalHighScore.find().sort('score', pymongo.DESCENDING):
+            highScoreLis.append(document)
+        return highScoreLis
 
-data = {'title': 'Roderich Moessner', 'options': [("*bleep* is tracy chapman's seventh studio album and was released september 13, 2005.", False), ('*bleep* is acondensed matter physicist working on the physics of strong fluctuations in many-body systems due to frustration, competing degrees of freedom or quantum fluctuations.', True), (
-    '*bleep* refers to pieces of broken glass (typically from a window) which become sharp missiles projected by the force which broke the glass, along with any strain energy due to tempering.', False), ('at 1,176.6 m above sea level (nhn) the *bleep* is the third highest mountain of the central black forest after the  kandel and the weißtannenhöhe.', False)], 'goodness': 0}
+    def addSurvivalHichScore(self, data):
+        self.survivalHighScore.insert_one(data)
+        return data
 
+    def getQuizHighscore(self):
+        highScoreLis = []
+        for document in self.quizHighScore.find().sort('score', pymongo.DESCENDING):
+            highScoreLis.append(document)
+        return highScoreLis
 
-rep.addToGoodQuestions(data)
+    def addQuizHichScore(self, data):
+        self.quizHighScore.insert_one(data)
+        return data
