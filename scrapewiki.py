@@ -5,18 +5,19 @@ import getWiki
 
 class QuestionMaker:
 
-
     def parseQuestion(self):
-        
+
         r = getWiki.getRandomWikiQuestion()
         dir1 = json.loads(r.text)
-        dir2 =  dir1['query']['pages']
+        dir2 = dir1['query']['pages']
         title = dir2[list(dir2.keys())[0]]['title']
         extract = dir2[list(dir2.keys())[0]]['extract']
         try:
             extract = re.search('.*?\.(?= )', extract).group()
-            extract = re.compile(title.lower() + '(?= )').sub('*Bleep*', extract.lower())
-            extract = re.compile(title.lower() + '(?=\w)').sub('*Bleep*-', extract.lower())
+            extract = re.compile(
+                title.lower() + '(?= )').sub('*Bleep*', extract.lower())
+            extract = re.compile(
+                title.lower() + '(?=\w)').sub('*Bleep*-', extract.lower())
             extract.decode('ascii')
         except UnicodeDecodeError:
             print("it was not a ascii-encoded unicode string")
@@ -40,7 +41,7 @@ class QuestionMaker:
         question = self.findAGoodQuestion()
         options = set()
         options.add((question[1], True))
-        dic = {'title': question[0], 'options': options, 'goodness':0}
+        dic = {'title': question[0], 'options': options, 'goodness': 0}
         for i in range(3):
-            dic['options'].add(tuple([self.findAGoodQuestion()[1], False])) 
+            dic['options'].add(tuple([self.findAGoodQuestion()[1], False]))
         return dic
