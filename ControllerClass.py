@@ -1,17 +1,21 @@
-import requests
-import re
-import json
-
-
 from scrapewiki import findAGoodQuestion, quiz
+
 
 class Controller(object):
     answer = ""
+    def __init__(self):
+        self.answer = []
 
     def DeployQuestion(self):
 
         try:
-            print(quiz())
+            questionObject = quiz()
+            optionDictionary = {}
+            question = questionObject[0]
+
+            for x, y in questionObject[1]:
+                optionDictionary[x] = y
+            print(optionDictionary)
         except ValueError:
             return "Something went wrong"
         '''
@@ -24,4 +28,7 @@ class Controller(object):
 
     def ProcessAnswer(self):
         print(self.answer)
-        
+
+
+con = Controller()
+con.DeployQuestion()

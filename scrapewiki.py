@@ -44,5 +44,3 @@ def quiz():
     for i in range(3):
         lis[1].add(tuple([findAGoodQuestion()[1], False])) 
     return lis
-
-print(quiz())
