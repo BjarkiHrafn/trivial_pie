@@ -21,23 +21,16 @@ class repository(object):
             testVals.append(document)
         return testVals
 
+    # adds a question to the goodQuestions collection
+    # if question already exists only increments the
+    # coodness value by 1
+
     def addToGoodQuestions(self, data):
-        print("data: ", data)
-        # TODO: create data on json format?
-        # postData = {
-        #     "points": data.poitns
-
-        # }
-        self.goodQuestions.insert_one(data)
-        return data
-
-    def raisGoodQuestionValueById(self, id):
-        # TODO: is id on ObjectId format?
-        #       if not ObjectId(id)
-        #       should the fields name be points?
-        updated = self.goodQuestions.find_one_and_update({"_id": id}, {
-            "$inc": {"goodness": 1}}, return_document=ReturnDocument.AFTER)
-        return updated
+        data['options'] = tuple(data['options'])
+        #data['goodness'] += 1
+        self.goodQuestions.find_one_and_update(
+            data, {'$inc': {"goodness": 1}}, upsert=True)
+        return "tibi"
 
     def findQuestionByTitle(self, title):
         question = self.goodQuestions.find_one({"title": title})
@@ -45,10 +38,6 @@ class repository(object):
 
 
 # test
-rep = repository()
-q = questionMaker.QuestionMaker()
-
-tibi = json.dumps(q.quiz())
-print(tibi)
-
-# rep.addToGoodQuestions()
+# rep = repository()
+# q = questionMaker.QuestionMaker()
+# rep.addToGoodQuestions(q.quiz())
