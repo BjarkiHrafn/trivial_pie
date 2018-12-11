@@ -44,3 +44,20 @@ class QuestionMaker:
         for i in range(3):
             dic['options'].add(tuple([self.findAGoodQuestion()[1], False]))
         return dic
+    
+    def titleQuiz(self):
+        question = self.findAGoodQuestion()
+        options = set()
+        options.add((question[0], True))
+        dic = {'title': question[1], 'options': options, 'goodness': 0}
+        for i in range(3):
+            dic['options'].add(tuple([self.findAGoodQuestion()[0], False]))
+        return dic
+    
+    def trueOrFalse(self):
+        question = self.findAGoodQuestion()
+        options = set()
+        options.add((question[0], True))
+        dic = {'title': question[1], 'options': options, 'goodness': 0}
+        dic['options'].add(tuple([self.findAGoodQuestion()[0], False]))
+        return dic

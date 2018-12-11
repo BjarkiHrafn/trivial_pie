@@ -1,5 +1,5 @@
 from scrapewiki import QuestionMaker
-
+from threading import Thread
 
 class Controller(object):
     
@@ -11,22 +11,33 @@ class Controller(object):
     def DeployQuestion(self):
 
         try:
-            questionObject = QuestionMaker()
-            questionObject = questionObject.quiz()
+            consQuest = QuestionMaker()
+            questionObject = consQuest.quiz()
+            '''
+            threads = []    
+            questions = {}
+            for i in range(5):
+                process = Thread(target=questionObject.quiz, args=(questions))
+                
+                process.start()
+                threads.append(process)
             
+            for process in threads:
+               
+                process.join()
+            print(questions)
+            for q in questions:
+                print(q)
+            '''
+
             return questionObject
+
         except ValueError:
             return "Something went wrong"
-        '''
-        someList = [{"Question" :["skr skrr",
-                    "ey mang",
-                    "Shit mang , that shit is wack mang uashd soajdo sao odoo dso od oasas ddo aos doa ods odsd do do",
-                    "brrRRaah"]}]
-        '''
         
 
     def ProcessAnswer(self):
         print(self.answer)
 
-#con = Controller()
-#con.DeployQuestion()
+con = Controller()
+con.DeployQuestion()
