@@ -1,5 +1,6 @@
-from scrapewiki import QuestionMaker
+from questionMaker import QuestionMaker
 from threading import Thread
+import random
 
 class Controller(object):
     
@@ -9,10 +10,11 @@ class Controller(object):
     #    self.answer = answer
 
     def DeployQuestion(self):
-
+        
         try:
-            consQuest = QuestionMaker()
-            questionObject = consQuest.quiz()
+            q = QuestionMaker()
+            options = [q.quiz, q.titleQuiz]
+            questionObject = random.choice(options)()
             '''
             threads = []    
             questions = {}
@@ -38,6 +40,3 @@ class Controller(object):
 
     def ProcessAnswer(self):
         print(self.answer)
-
-con = Controller()
-con.DeployQuestion()
