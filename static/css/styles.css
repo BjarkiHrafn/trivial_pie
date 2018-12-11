@@ -47,3 +47,14 @@ body{
 .questionOption:hover{
     background-size: 100% 100%;
 }
+#loading{
+    height: 40%;
+    width: 50%;
+}
+.center{
+    margin: auto;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+
+  }
