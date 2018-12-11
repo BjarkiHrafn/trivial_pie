@@ -56,9 +56,9 @@ class QuestionMaker:
     
     def trueOrFalse(self): #A title and either the correct extract or a wrong extract 
         question = self.findAGoodQuestion()
-        options = set()
-        options.add((question[1], True))
-        dic = {'title': question[0], 'options': options, 'goodness': 0}
-        dic['options'].add(tuple([self.findAGoodQuestion()[1], False]))
-        dic['options'].pop() #remove either extract
+        wrongQuestion = self.findAGoodQuestion()[1]
+        options = set(((question[1], True), (wrongQuestion, False)))
+        options.pop()
+        options = options.pop()
+        dic = {'title': question[0] + ": " + options[0], 'options': [('True', options[1]),('False', not options[1])], 'goodness': 0}
         return dic
