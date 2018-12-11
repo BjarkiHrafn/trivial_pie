@@ -1,15 +1,14 @@
-import requests
 import re
 import json
+import getWiki
 
-def getRandomWikiQuestion():
-    r = requests.get('https://en.wikipedia.org/wiki/special:random')
-    site = r.url.split('wiki/')[1]
-    try:
-        r = requests.get('https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro&explaintext&redirects=1&titles='+ site + '&fbclid=IwAR315Sqa4ZskYIewv8NOe6GRWB-TGwN1zLHTfcSqBH2WHf6MaJn3SLXEOEU')
-    except:
-        print('wiki entry not found')
-    else:
+
+class QuestionMaker:
+
+
+    def parseQuestion(self):
+        
+        r = getWiki.getRandomWikiQuestion()
         dir1 = json.loads(r.text)
         dir2 =  dir1['query']['pages']
         title = dir2[list(dir2.keys())[0]]['title']
@@ -19,7 +18,6 @@ def getRandomWikiQuestion():
             extract = re.compile(title.lower() + '(?= )').sub('*Bleep*', extract.lower())
             extract = re.compile(title.lower() + '(?=\w)').sub('*Bleep*-', extract.lower())
             extract.decode('ascii')
-            print(extract)
         except UnicodeDecodeError:
             print("it was not a ascii-encoded unicode string")
             return None
@@ -30,19 +28,17 @@ def getRandomWikiQuestion():
         else:
             return None
 
-def findAGoodQuestion():
-    ret = 0
-    while True:
-        ret = getRandomWikiQuestion()
-        if ret != None:
-            break
-    return ret
+    def findAGoodQuestion(self):
+        ret = 0
+        while True:
+            ret = self.parseQuestion()
+            if ret != None:
+                break
+        return ret
 
-def quiz():
-    question = findAGoodQuestion()
-    lis = [question[0], set([tuple([question[1], True])])]
-    for i in range(3):
-        lis[1].add(tuple([findAGoodQuestion()[1], False])) 
-    return lis
-
-print(quiz())
+    def quiz(self):
+        question = self.findAGoodQuestion()
+        dic = {'title': question[0], 'options': set(([question[1], True])), 'goodness':0}
+        for i in range(3):
+            dic['options'].add(tuple([self.findAGoodQuestion()[1], False])) 
+        return dic
