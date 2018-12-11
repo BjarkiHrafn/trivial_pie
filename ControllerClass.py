@@ -1,4 +1,4 @@
-from scrapewiki import findAGoodQuestion, quiz
+from scrapewiki import QuestionMaker
 
 
 class Controller(object):
@@ -9,13 +9,10 @@ class Controller(object):
     def DeployQuestion(self):
 
         try:
-            questionObject = quiz()
-            optionDictionary = {}
-            question = questionObject[0]
-
-            for x, y in questionObject[1]:
-                optionDictionary[x] = y
-            print(optionDictionary)
+            questionObject = QuestionMaker()
+            questionObject = questionObject.quiz()
+            
+            print(questionObject)
         except ValueError:
             return "Something went wrong"
         '''
