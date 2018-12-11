@@ -31,5 +31,9 @@ class repository(object):
         #       if not ObjectId(id)
         #       should the fields name be points?
         updated = self.goodQuestions.find_one_and_update({"_id": id}, {
-            "$inc": {"points": 1}}, return_document=ReturnDocument.AFTER)
+            "$inc": {"goodness": 1}}, return_document=ReturnDocument.AFTER)
         return updated
+
+    def findQuestionByTitle(self, title):
+        question = self.goodQuestions.find_one({"title": title})
+        return question
