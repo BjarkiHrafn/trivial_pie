@@ -6,7 +6,6 @@ import getWiki
 class QuestionMaker:
 
     def parseQuestion(self):
-
         r = getWiki.getRandomWikiQuestion()
         dir1 = json.loads(r.text)
         dir2 = dir1['query']['pages']
