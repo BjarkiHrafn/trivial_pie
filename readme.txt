@@ -1,7 +1,7 @@
 install 
 pip install Flask
-py -m pip install pymongo
-py -m pip install requests
+python -m pip install pymongo
+python -m pip install requests
 
 
 mongodb

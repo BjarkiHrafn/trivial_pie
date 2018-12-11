@@ -4,7 +4,7 @@ import pymongo
 
 import json
 
-import scrapewiki
+import questionMaker
 
 
 class repository(object):
@@ -46,7 +46,7 @@ class repository(object):
 
 # test
 rep = repository()
-q = scrapewiki.QuestionMaker()
+q = questionMaker.QuestionMaker()
 
 tibi = json.dumps(q.quiz())
 print(tibi)

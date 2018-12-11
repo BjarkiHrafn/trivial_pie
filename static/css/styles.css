@@ -3,25 +3,47 @@ body{
     padding: 0;
 }
 
-.container{
-    position: fixed;
+.questionContainer{
+    position: absolute;
     top: 50%;
-    left: 50%;
-    margin-top: -50px;
-    margin-left: -100px;
+    left:50%;
+    -webkit-transform: translate(-50%,-50%);
 }
 
-.questionContainer{
-    width: 50%;
-    margin: 0 auto;
-    text-align: center; 
+#questionForm{
+    display: -webkit-flex; /* Safari */
+    -webkit-align-items: center; /* Safari 7.0+ */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #questionBtn{
     background: transparent;
     border: none !important;
+    font-size: 2em;
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 10px;
+    font-family: 'Dosis', sans-serif;
+    
 }
 
 .singleQuestion{
-    margin-bottom: 10px;
+    margin: 10px 10px;
+}
+
+.questionOption{
+    width: calc(100%);
+  background-image: linear-gradient(transparent calc(100% - 5px), black 3px);
+  background-repeat: no-repeat;
+  background-size: 0% 100%;
+  transition: background-size 1s;
+  text-align: center;
+  margin: auto;
+
+}
+
+.questionOption:hover{
+    background-size: 100% 100%;
 }
