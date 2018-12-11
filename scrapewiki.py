@@ -40,11 +40,9 @@ def findAGoodQuestion():
 
 def quiz():
     question = findAGoodQuestion()
-    lis = [question[0], set(tuple([question[1], True]))]
+    lis = [question[0], set([tuple([question[1], True])])]
     for i in range(3):
         lis[1].add(tuple([findAGoodQuestion()[1], False])) 
-    print(lis[0], end='\n\n\n')
-    for x in lis[1]:
-        print(x, end='\n\n')
+    return lis
 
 print(quiz())
