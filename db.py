@@ -1,11 +1,15 @@
-import pymongo
-from pymongo import MongoClient, ReturnDocument
 from bson.objectid import ObjectId
+from pymongo import MongoClient, ReturnDocument
+import pymongo
+
+import json
+
+import scrapewiki
 
 
 class repository(object):
     # connectionstring to a mongo database on mlab
-    def __init__(self, name):
+    def __init__(self):
         MONGODB_URI = "mongodb://abc123:abc123@ds011422.mlab.com:11422/pie"
         client = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
         self.db = client.get_database("pie")
@@ -18,6 +22,7 @@ class repository(object):
         return testVals
 
     def addToGoodQuestions(self, data):
+        print("data: ", data)
         # TODO: create data on json format?
         # postData = {
         #     "points": data.poitns
@@ -37,3 +42,13 @@ class repository(object):
     def findQuestionByTitle(self, title):
         question = self.goodQuestions.find_one({"title": title})
         return question
+
+
+# test
+rep = repository()
+q = scrapewiki.QuestionMaker()
+
+tibi = json.dumps(q.quiz())
+print(tibi)
+
+# rep.addToGoodQuestions()

@@ -40,8 +40,8 @@ class QuestionMaker:
     def quiz(self):
         question = self.findAGoodQuestion()
         options = set()
-        options.add((question[1], True))
-        dic = {'title': question[0], 'options': options, 'goodness': 0}
+        options.add(question[1], True))
+        dic={'title': question[0], 'options': options, 'goodness': 0}
         for i in range(3):
             dic['options'].add(tuple([self.findAGoodQuestion()[1], False]))
         return dic
