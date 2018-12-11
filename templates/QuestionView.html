@@ -2,11 +2,15 @@
 
 {% block body %}
     <div class="questionContainer">
-        <form action = "{{ url_for('PostAnswer')}}" method = "post">
+        <form action = "{{ url_for('PostAnswer')}}" method = "post" id="questionForm">
                 <button type="submit" name="menu">Menu</button>
-                {% for m in msg %}
-                    <div class="singleQuestion"><button type="submit" name="ans" value="{{m}}" id="questionBtn">{{m}}</button></div>
+                <input type="checkbox" name="goodQuestion" >good question!</input>
+                
+                <div class="singleQuestion"><i>{{msg.title}}</i></div>
+                {% for dict_item in msg.options %}
+                        <div class="questionOption"><input type="radio" name="ans" value="{{dict_item}}" id="questionBtn">{{dict_item[0]}}</input></div>
                 {% endfor %}
+                <button type="submit" name="submitAns" value={{msg}}>submit</button>
         </form>
     </div>
     

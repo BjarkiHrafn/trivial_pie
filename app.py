@@ -4,6 +4,7 @@ from ControllerClass import Controller
 
 app = Flask(__name__)
 controllerClass = Controller()
+currentQuestion = controllerClass.DeployQuestion()
 
 app.debug = True
 
@@ -22,7 +23,12 @@ def MainMenu():
 @app.route('/questions')
 # Post the questions here
 def QuestionMenu():
-    return render_template('QuestionView.html', msg=controllerClass.DeployQuestion())
+    return render_template('QuestionView.html', msg=currentQuestion)
+
+@app.route('/results')
+
+def ResultMenu():
+    return render_template('ResultView.html', result = controllerClass.answer, goodQuestion = controllerClass.goodQuestions)
 
 
 @app.route('/question', methods=['GET', 'POST'])
@@ -31,12 +37,17 @@ def PostAnswer():
     try:
         # When you answer the controllerClass.answer gets the value
         # and you are redirected to another question or to the menu
-        if 'ans' in request.form:
+        if 'submitAns' in request.form:
             ans = request.form.get("ans")
+            question = request.form.get("submitAns")
+            if request.form.get('goodQuestion'):
+                controllerClass.goodQuestions.append(currentQuestion)
             controllerClass.answer = ans
-            return redirect(url_for('QuestionMenu'))
+            
+            return redirect(url_for('ResultMenu'))
         elif 'menu' in request.form:
             return redirect(url_for('MainMenu'))
+
     except:
         return "Something went wrong.."
 
