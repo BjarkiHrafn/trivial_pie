@@ -29,7 +29,10 @@ class repository(object):
         data['options'] = tuple(data['options'])
         #data['goodness'] += 1
         self.goodQuestions.find_one_and_update(
-            data, {'$inc': {"goodness": 1}}, upsert=True)
+            {
+                "title": data["title"],
+                "options": data["options"]
+            }, {'$inc': {"goodness": 1}}, upsert=True)
         return "tibi"
 
     def findQuestionByTitle(self, title):
@@ -38,6 +41,10 @@ class repository(object):
 
 
 # test
-# rep = repository()
-# q = questionMaker.QuestionMaker()
-# rep.addToGoodQuestions(q.quiz())
+rep = repository()
+
+data = {'title': 'Roderich Moessner', 'options': [("*bleep* is tracy chapman's seventh studio album and was released september 13, 2005.", False), ('*bleep* is acondensed matter physicist working on the physics of strong fluctuations in many-body systems due to frustration, competing degrees of freedom or quantum fluctuations.', True), (
+    '*bleep* refers to pieces of broken glass (typically from a window) which become sharp missiles projected by the force which broke the glass, along with any strain energy due to tempering.', False), ('at 1,176.6 m above sea level (nhn) the *bleep* is the third highest mountain of the central black forest after the  kandel and the weißtannenhöhe.', False)], 'goodness': 0}
+
+
+rep.addToGoodQuestions(data)
