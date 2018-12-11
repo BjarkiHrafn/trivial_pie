@@ -54,5 +54,3 @@ class QuestionMaker:
             dic['options'].add(tuple([self.findAGoodQuestion()[0], False]))
         return dic
 
-q = QuestionMaker()
-print(q.titleQuiz())

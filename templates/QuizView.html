@@ -5,7 +5,6 @@
         <form action = "{{ url_for('PostAnswer')}}" method = "post" id="questionForm">
                 <button type="submit" name="menu">Menu</button>
                 {% for item in questions %}
-                    <button type="submit" name="menu">Menu</button>
                     <input type="checkbox" name="goodQuestion" >good question!</input>
                     
                     <div class="singleQuestion"><i>{{item.title}}</i></div>
@@ -13,7 +12,7 @@
                                 <div class="questionOption"><input type="radio" name="ans" value="{{dict_item}}" id="questionBtn">{{dict_item[0]}}</input></div>
                         {% endfor %}
                 {% endfor %}
-                <button type="submit" name="submitAns" value={{msg}}>submit</button>
+                <button type="submit" name="submitAns" value={{questions}}>submit</button>
         </form>
     </div>
     

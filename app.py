@@ -4,7 +4,7 @@ from ControllerClass import Controller
 
 app = Flask(__name__)
 controllerClass = Controller()
-currentQuestion = controllerClass.DeployQuestion()
+
 quizmode = []
 
 app.debug = True
@@ -20,27 +20,23 @@ def MasterMenu():
 def MainMenu():
     return render_template('MenuView.html')
 
-def getTenQuestions():
-    for i in range(2):
+def getQuestions(numberOfQuestions):
+    for i in range(numberOfQuestions):
         quizmode.append(controllerClass.DeployQuestion())
     return quizmode
 
 @app.route('/quiz')
 
 def QuizMenu():
-    temp = getTenQuestions()
-    return render_template('QuizView.html', questions = temp)
+    q = getQuestions(5)
+    return render_template('QuizView.html', questions = q)
 
-@app.route('/quiz', methods=[])
 
-def PostQuiz():
-    if 'menu' in request.form:
-        return redirect(url_for('ResultMenu'))
-
-@app.route('/questions')
+@app.route('/survival')
 # Post the questions here
 def QuestionMenu():
-    return render_template('QuestionView.html', msg=currentQuestion)
+    q = getQuestions(1)
+    return render_template('QuestionView.html', msg= q)
 
 @app.route('/results')
 
@@ -57,8 +53,8 @@ def PostAnswer():
         if 'submitAns' in request.form:
             ans = request.form.get("ans")
             question = request.form.get("submitAns")
-            if request.form.get('goodQuestion'):
-                controllerClass.goodQuestions.append(currentQuestion)
+            #if request.form.get('goodQuestion'):
+                #controllerClass.goodQuestions.append(currentQuestion)
             controllerClass.answer = ans
             
             return redirect(url_for('ResultMenu'))
