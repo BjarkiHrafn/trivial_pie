@@ -99,5 +99,6 @@ button:hover{
   }
 
   .checkBoxContainer label, checkBoxContainer input{
-      
+    display: inline-block;
+    vertical-align: middle; 
   }
