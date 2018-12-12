@@ -1,42 +1,43 @@
 from questionMaker import QuestionMaker
+from threading import Lock
 from threading import Thread
+from queue import Queue
+import time
 import random
 
+
 class Controller(object):
-    
+
     answer = ""
     goodQuestions = []
-    #def __init__(self):
-    #    self.answer = answer
+    #self.answer = answer
 
-    def DeployQuestion(self):
-        
-        try:
-            q = QuestionMaker()
-            options = [q.quiz, q.titleQuiz]
+    def DeployQuestion(self, numbOfQuest):
+
+        questions = []
+        getLock = Lock()
+        q = QuestionMaker()
+        options = [q.quiz, q.titleQuiz]
+
+        def addToQuestions():
             questionObject = random.choice(options)()
-            '''
-            threads = []    
-            questions = {}
-            for i in range(5):
-                process = Thread(target=questionObject.quiz, args=(questions))
-                
-                process.start()
-                threads.append(process)
-            
-            for process in threads:
-               
-                process.join()
-            print(questions)
-            for q in questions:
-                print(q)
-            '''
+            with getLock:
+                questions.append(questionObject)
 
-            return questionObject
+        for i in range(numbOfQuest):
+            process = Thread(target=addToQuestions)
+            # thread dies when main thread dies
+            process.daemon = True
+            process.start()
 
-        except ValueError:
-            return "Something went wrong"
-        
+        process.join()
+
+        # wait for all the questions to arrive
+        while True:
+            if len(questions) == numbOfQuest:
+                break
+
+        return questions
 
     def ProcessAnswer(self):
         print(self.answer)

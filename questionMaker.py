@@ -64,5 +64,3 @@ class QuestionMaker:
         options = options.pop()
         dic = {'title': question[0] + ": " + options[0], 'options': [('True', options[1]),('False', not options[1])], 'goodness': 0}
         return dic
-q = QuestionMaker()
-print(q.quiz())
