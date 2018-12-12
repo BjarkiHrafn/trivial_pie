@@ -14,16 +14,16 @@ class QuestionMaker:
         try:
             extract = re.search('.*?\.(?= )', extract).group() # regex for first sentnence 
             extract = re.compile(
-                title.lower() + '(?= )').sub('*Bleep*', extract.lower()) #replace the key word with bleep
+                title + '(?= )|' + title.lower() + '(?= )').sub('*Bleep*', extract) #replace the key word with bleep
             extract = re.compile(
-                title.lower() + '(?=\w)').sub('*Bleep*-', extract.lower()) #replace the key word with a dash so the connected chars arent lost, for comprehension sake
+                title + '(?=\w)|' + title.lower() + '(?=\w)').sub('*Bleep*-', extract) #replace the key word with a dash so the connected chars arent lost, for comprehension sake
             extract.decode('ascii')
         except UnicodeDecodeError:
             print("it was not a ascii-encoded unicode string")
             return None
         except:
             pass
-        if '*bleep*' in extract:
+        if '*Bleep*' in extract:
             return [title, extract]
         else:
             return None
@@ -55,9 +55,6 @@ class QuestionMaker:
             dic['options'].add(tuple([self.findAGoodQuestion()[0], False]))
         dic['options'] = list(dic['options']) 
         return dic
-<<<<<<< HEAD
-
-=======
     
     def trueOrFalse(self): #A title and either the correct extract or a wrong extract 
         question = self.findAGoodQuestion()
@@ -67,4 +64,5 @@ class QuestionMaker:
         options = options.pop()
         dic = {'title': question[0] + ": " + options[0], 'options': [('True', options[1]),('False', not options[1])], 'goodness': 0}
         return dic
->>>>>>> 425cccdc0e8d43800f41a9203090a738d52ea03b
+q = QuestionMaker()
+print(q.quiz())
