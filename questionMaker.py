@@ -14,16 +14,16 @@ class QuestionMaker:
         try:
             extract = re.search('.*?\.(?= )', extract).group() # regex for first sentnence 
             extract = re.compile(
-                title.lower() + '(?= )').sub('*Bleep*', extract.lower()) #replace the key word with bleep
+                title + '(?= )|' + title.lower() + '(?= )').sub('*Bleep*', extract) #replace the key word with bleep
             extract = re.compile(
-                title.lower() + '(?=\w)').sub('*Bleep*-', extract.lower()) #replace the key word with a dash so the connected chars arent lost, for comprehension sake
+                title + '(?=\w)|' + title.lower() + '(?=\w)').sub('*Bleep*-', extract) #replace the key word with a dash so the connected chars arent lost, for comprehension sake
             extract.decode('ascii')
         except UnicodeDecodeError:
             print("it was not a ascii-encoded unicode string")
             return None
         except:
             pass
-        if '*bleep*' in extract:
+        if '*Bleep*' in extract:
             return [title, extract]
         else:
             return None
