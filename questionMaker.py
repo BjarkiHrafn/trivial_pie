@@ -55,9 +55,6 @@ class QuestionMaker:
             dic['options'].add(tuple([self.findAGoodQuestion()[0], False]))
         dic['options'] = list(dic['options']) 
         return dic
-<<<<<<< HEAD
-
-=======
     
     def trueOrFalse(self): #A title and either the correct extract or a wrong extract 
         question = self.findAGoodQuestion()
@@ -67,4 +64,3 @@ class QuestionMaker:
         options = options.pop()
         dic = {'title': question[0] + ": " + options[0], 'options': [('True', options[1]),('False', not options[1])], 'goodness': 0}
         return dic
->>>>>>> 425cccdc0e8d43800f41a9203090a738d52ea03b

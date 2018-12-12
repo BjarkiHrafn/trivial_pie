@@ -1,11 +1,13 @@
 from flask import Flask, render_template, request, url_for, redirect
 from ControllerClass import Controller
-
+import sys
+import re
 
 app = Flask(__name__)
 controllerClass = Controller()
 
-quizmode = []
+
+
 
 app.debug = True
 
@@ -20,7 +22,18 @@ def MasterMenu():
 def MainMenu():
     return render_template('MenuView.html')
 
+@app.route('/menu', methods = ['GET', 'POST'])
+
+def MenuRedirect():
+    
+    if 'quiz' in request.form:
+        return redirect(url_for('QuizMenu'))
+    elif 'survival' in request.form:
+        return redirect(url_for('QuestionMenu'))
+
+
 def getQuestions(numberOfQuestions):
+    quizmode = []
     for i in range(numberOfQuestions):
         quizmode.append(controllerClass.DeployQuestion())
     return quizmode
@@ -36,7 +49,23 @@ def QuizMenu():
 # Post the questions here
 def QuestionMenu():
     q = getQuestions(1)
-    return render_template('QuestionView.html', msg= q)
+    return render_template('QuestionView.html', msg= q, lives = controllerClass.survivalModeLives)
+
+@app.route('/survival', methods=['POST'])
+
+def ProcessSurvivalQuestion():
+    if 'submitAns'in request.form:
+        outcome = eval(request.form.get("ans"))
+        if outcome[1] == False and outcome[1] != str(outcome[0]):
+            controllerClass.survivalModeLives -=  1
+            print("outcome: ", outcome, "...You're wrong sukkah!", file=sys.stderr)
+            if controllerClass.survivalModeLives == 0:
+                print('prummp')
+        controllerClass.survivalModeArray.append(outcome)
+        return redirect(url_for('QuestionMenu'))
+    elif 'menu' in request.form:
+            return redirect(url_for('MainMenu'))
+        
 
 @app.route('/results')
 
@@ -55,6 +84,7 @@ def PostAnswer():
             question = request.form.get("submitAns")
             #if request.form.get('goodQuestion'):
                 #controllerClass.goodQuestions.append(currentQuestion)
+            ans = eval(ans)
             controllerClass.answer = ans
             
             return redirect(url_for('ResultMenu'))

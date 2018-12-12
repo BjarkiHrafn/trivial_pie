@@ -6,6 +6,8 @@ class Controller(object):
     
     answer = ""
     goodQuestions = []
+    survivalModeLives = 5
+    survivalModeArray = []
     #def __init__(self):
     #    self.answer = answer
 
@@ -13,7 +15,7 @@ class Controller(object):
         
         try:
             q = QuestionMaker()
-            options = [q.quiz, q.titleQuiz]
+            options = [q.quiz, q.titleQuiz, q.trueOrFalse]
             questionObject = random.choice(options)()
             '''
             threads = []    

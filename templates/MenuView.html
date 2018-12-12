@@ -2,7 +2,11 @@
 
 {% block body %}
     
-    <h1>Menu</h1>
+    <form action = "{{ url_for('MenuRedirect')}}" method = "post" id="questionForm">
+
+        <button type="submit" name="quiz">Take a quiz</button>
+        <button type="submit" name="survival">Survival mode</button>
+    </form>
 
 
 {% endblock %}
