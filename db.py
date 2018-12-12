@@ -61,6 +61,6 @@ class repository(object):
             highScoreLis.append(document)
         return highScoreLis
 
-    def addQuizHichScore(self, data):
+    def addQuizHighScore(self, data):
         self.quizHighScore.insert_one(data)
         return data

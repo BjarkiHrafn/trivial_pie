@@ -10,6 +10,10 @@ class Controller(object):
 
     answer = ""
     goodQuestions = []
+    survivalModeLives = 5
+    survivalModeArray = []
+    quizModeArray = []
+    currentGameMode = ""
     #self.answer = answer
 
     def DeployQuestion(self, numbOfQuest):
@@ -17,7 +21,7 @@ class Controller(object):
         questions = []
         getLock = Lock()
         q = QuestionMaker()
-        options = [q.quiz, q.titleQuiz]
+        options = [q.quiz, q.titleQuiz, q.trueOrFalse]
 
         def addToQuestions():
             questionObject = random.choice(options)()

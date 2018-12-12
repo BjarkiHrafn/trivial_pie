@@ -3,13 +3,21 @@
 {% block body %}
     <div class="questionContainer">
         <form action = "{{ url_for('ProcessSurvivalQuestion')}}" method = "post" id="questionForm">
+                
                 <button type="submit" name="menu">Menu</button>
+                
+                <div class="checkBoxContainer">
+                    <label for="goodQuestion">Good question</label>
+                    <input type="checkbox" id="goodQuestion" class="makeVisible" name="questionCheck" value="1">
+                </div>
+                
                 {% for i in range(lives)%}
                     <span class="glyphicon glyphicon-heart" style="color:red"></span>
                 {% endfor %}
+                
                 {% for item in msg %}
-                    <input type="checkbox" name="goodQuestion" >good question!</input>
                     
+
                     <div class="singleQuestion"><i>{{item.title}}</i></div>
                     {% for dict_item in item.options %}
                         <div class="custom-control custom-radio">
@@ -19,6 +27,7 @@
                             
                     {% endfor %}
                 {% endfor %}
+                
                 <button type="submit" name="submitAns" value={{msg}} id="submitButton">submit</button>
         </form>
     </div>

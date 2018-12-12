@@ -93,3 +93,11 @@ button:hover{
     text-align: center;
 
   }
+
+  .makeVisible {
+      opacity: 100 !important;
+  }
+
+  .checkBoxContainer label, checkBoxContainer input{
+      
+  }

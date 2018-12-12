@@ -35,15 +35,13 @@ def MenuRedirect():
 
 
 def getQuestions(numberOfQuestions):
-    quizmode = []
-    for i in range(numberOfQuestions):
-        quizmode.append(controllerClass.DeployQuestion())
-    return quizmode
+    return controllerClass.DeployQuestion(numberOfQuestions)
 
 @app.route('/quiz')
 
 def QuizMenu():
     q = getQuestions(2)
+    controllerClass.currentGameMode = "quiz"
     return render_template('QuizView.html', questions = q)
 
 
@@ -51,6 +49,7 @@ def QuizMenu():
 # Post the questions here
 def QuestionMenu():
     q = getQuestions(1)
+    controllerClass.currentGameMode = "survival"
     return render_template('QuestionView.html', msg= q, lives = controllerClass.survivalModeLives)
 
 @app.route('/survival', methods=['POST'])
@@ -58,6 +57,8 @@ def QuestionMenu():
 def ProcessSurvivalQuestion():
     if 'submitAns'in request.form:
         outcome = eval(request.form.get("ans"))
+        checkbox = request.form.get('questionCheck')
+        print(checkbox, file = sys.stderr)
         if not outcome[1]:
             controllerClass.survivalModeLives -=  1
             print("outcome: ", outcome, "...You're wrong sukkah!", file=sys.stderr)
@@ -87,10 +88,12 @@ def PostAnswer():
             question = dict(question)
             question.pop('submitAns')
             for key in range(len(question)):
-                print("x: ", eval(question[str(key+1)])[1], file=sys.stderr)
+                if eval(question[str(key+1)])[1]:
+                    controllerClass.quizModeArray.append(question[str(key+1)])
+            database.addQuizHichScore()
             controllerClass.answer = question 
             
-            return redirect(url_for('ResultMenu'))
+            return redirect(url_for('EndGameGet'))
         elif 'menu' in request.form:
             return redirect(url_for('MainMenu'))
 
@@ -107,12 +110,18 @@ def EndGameGet():
 def EndGamePost():
     if 'submitScore' in request.form:
         nickname = request.form.get('nicknamePick')
-        
-        print("nickname: ", nickname, file=sys.stderr)
-        score = len(controllerClass.survivalModeArray)
-        data = {"nickName": nickname, "score": score}
-        database.addSurvivalHichScore(data)
-        controllerClass.survivalModeArray = []
+
+        if controllerClass.currentGameMode == "survival":    
+            print("nickname: ", nickname, file=sys.stderr)
+            score = len(controllerClass.survivalModeArray)
+            data = {"nickName": nickname, "score": score}
+            database.addSurvivalHichScore(data)
+            controllerClass.survivalModeArray = []
+        elif controllerClass.currentGameMode == "quiz":
+            score = len(controllerClass.quizModeArray)
+            data = {"nickName": nickname, "score": score}
+            database.addQuizHighScore(data)
+            controllerClass.quizModeArray = []
     return redirect(url_for('MainMenu'))
 
 if __name__ == '__main__':
