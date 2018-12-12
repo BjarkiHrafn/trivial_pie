@@ -102,3 +102,33 @@ button:hover{
     display: inline-block;
     vertical-align: middle; 
   }
+
+.gameModeButton {  
+    font-size: 24px;
+    height: 100%;
+}
+
+#quizGameMode {
+    background-color: #3F9443
+}
+
+#header {
+    height: 100;
+    padding: 25px;
+    text-align: center;
+    background: #1abc9c;
+    color: white;
+    font-size: 30px;
+    display: block;
+}
+
+#footer {
+    height: 100px;
+    padding: 25px;
+    position: absolute;
+    text-align: center;
+    bottom: 0px;  
+    background-color: grey;
+    display: block;
+    width: 100%;
+}
