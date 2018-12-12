@@ -86,13 +86,15 @@ def PostAnswer():
             #ans = request.form.get("ans")
             question = request.form
             question = dict(question)
+            
             question.pop('submitAns')
+            
+            
             for key in range(len(question)):
                 if eval(question[str(key+1)])[1]:
                     controllerClass.quizModeArray.append(question[str(key+1)])
-            database.addQuizHichScore()
-            controllerClass.answer = question 
-            
+        
+            #controllerClass.answer = question 
             return redirect(url_for('EndGameGet'))
         elif 'menu' in request.form:
             return redirect(url_for('MainMenu'))
