@@ -4,6 +4,7 @@ from threading import Thread
 from queue import Queue
 import time
 import random
+import db
 
 
 class Controller(object):
@@ -45,3 +46,10 @@ class Controller(object):
 
     def ProcessAnswer(self):
         print(self.answer)
+
+    def getQuizHighScores(self):
+        return db.repository().getQuizHighscore()
+
+    def getSurvivalHighScores(self):
+        return db.repository().getSurvivalHighscore()
+

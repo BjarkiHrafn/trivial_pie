@@ -100,12 +100,12 @@ def PostAnswer():
     except:
         return "Something went wrong.."
 
-@app.route('/highscore')
+@app.route('/higscore')
 
 def EndGameGet():
     return render_template('EndGameMenu.html')
 
-@app.route('/highscore', methods = ['GET', 'POST'])
+@app.route('/higscore', methods = ['GET', 'POST'])
 
 def EndGamePost():
     if 'submitScore' in request.form:
@@ -124,5 +124,11 @@ def EndGamePost():
             controllerClass.quizModeArray = []
     return redirect(url_for('MainMenu'))
 
+@app.route('/highscore')
+def getHighScores():
+    return render_template('highscore.html', quiz = controllerClass.getQuizHighScores(), survival = controllerClass.getSurvivalHighScores())
+
+
 if __name__ == '__main__':
     app.run()
+
