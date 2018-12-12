@@ -6,7 +6,7 @@ class Controller(object):
     
     answer = ""
     goodQuestions = []
-    survivalModeLives = 5
+    survivalModeLives = 1
     survivalModeArray = []
     #def __init__(self):
     #    self.answer = answer

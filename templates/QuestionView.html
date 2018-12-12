@@ -5,7 +5,7 @@
         <form action = "{{ url_for('ProcessSurvivalQuestion')}}" method = "post" id="questionForm">
                 <button type="submit" name="menu">Menu</button>
                 {% for i in range(lives)%}
-                    <i>life </i>
+                    <span class="glyphicon glyphicon-heart" style="color:red"></span>
                 {% endfor %}
                 {% for item in msg %}
                     <input type="checkbox" name="goodQuestion" >good question!</input>
