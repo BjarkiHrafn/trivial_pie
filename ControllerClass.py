@@ -1,6 +1,5 @@
 from questionMaker import QuestionMaker
-from threading import Lock
-from threading import Thread
+from threading import Lock, Thread
 from queue import Queue
 import time
 import random
@@ -17,7 +16,6 @@ class Controller(object):
     correctAnswerArray = []
     currentGameMode = ""
     numberOfQuestionsForQuiz = 5
-    #self.answer = answer
 
     def DeployQuestion(self, numbOfQuest):
 
@@ -45,9 +43,14 @@ class Controller(object):
                 break
 
         return questions
+    def addSurvivalHichScore(self, data):
+        db.repository().addSurvivalHichScore(data)
 
-    def ProcessAnswer(self):
-        print(self.answer)
+    def addQuizHighScore(self, data):
+        db.repository().addQuizHighScore(data)
+        
+    def addToGoodQuestions(self, data):
+        db.repository().addToGoodQuestions(data)
 
     def getQuizHighScores(self):
         return db.repository().getQuizHighscore()

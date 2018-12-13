@@ -1,16 +1,15 @@
 {% extends 'MasterView.html' %}
 
 {% block body %}
+
     <div class="questionContainer">
         <form action = "{{ url_for('PostAnswer')}}" method = "post" id="questionForm">
-                <button type="submit" name="menu">Menu</button>
                 {% for item in questions %}
                     {% set outerIndex = loop.index - 1 %}
                     <div class="singleQuestion"><i>{{item.title}}</i></div>
                     <div class="checkBoxContainer">
                         <label for="goodQuestion{{loop.index}}">Good question</label>
                         <input type="checkbox" id="goodQuestion{{loop.index}}" class="makeVisible" name="questionCheck{{outerIndex}}" value={{questionAndOptions}}>
-                        <h1>{{outerIndex}}</h1>
                     </div>
                     {% for dict_item in item.options %}
                         <div class="custom-control custom-radio">
@@ -20,10 +19,8 @@
                         </div>
                     {% endfor %}
                 {% endfor %}
-                <button type="submit" name="submitAns" value={{questions}}>submit</button>
+                <button type="submit" name="submitAns" value={{questions}}>Submit!</button>
         </form>
     </div>
     
-
-
 {% endblock %}
