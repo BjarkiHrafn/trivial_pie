@@ -1,6 +1,13 @@
 from flask import Flask, render_template, request, url_for, redirect
 from ControllerClass import Controller
+<<<<<<< HEAD
 import sys #this is to print to console
+=======
+from db import repository
+import sys
+import re
+import badWords
+>>>>>>> ad54a4a8b264c412a261069d81708cecbab16ab0
 
 app = Flask(__name__)
 app.debug = True
@@ -102,18 +109,22 @@ def EndGameGet():
 @app.route('/endgame', methods=['GET', 'POST'])
 def EndGamePost():
     if 'submitScore' in request.form:
-        nickname = request.form.get('nicknamePick')
 
         if controllerClass.currentGameMode == "survival":
-            print("nickname: ", nickname, file=sys.stderr)
+            nickname = request.form.get('nicknamePick')
             score = len(controllerClass.survivalModeArray)
             data = {"nickName": nickname, "score": score}
-            controllerClass.addSurvivalHichScore(data)
+            if data["nickName"].lower() in badWords.bad:
+                data["nickName"] = 'Vondurkall'
+            database.addSurvivalHichScore(data)
             controllerClass.survivalModeArray = []
         elif controllerClass.currentGameMode == "quiz":
+            nickname = request.form.get('nicknamePick')
             score = len(controllerClass.correctAnswerArray)
             data = {"nickName": nickname, "score": score}
-            controllerClass.addQuizHighScore(data)
+            if data["nickName"].lower() in badWords.bad:
+                data["nickName"] = 'Vondurkall'
+            database.addQuizHighScore(data)
             controllerClass.correctAnswerArray = []
     return redirect(url_for('MainMenu'))
 

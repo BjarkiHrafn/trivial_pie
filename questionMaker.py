@@ -43,7 +43,7 @@ class QuestionMaker:
         dic = {'title': question[0], 'options': options, 'goodness': 0}
         for i in range(3):  #add 3 extracts from completely different articles, these are the wrong answers
             dic['options'].add(tuple([self.findAGoodQuestion()[1], False]))
-        dic['options'] = list(dic['options']) 
+        dic['options'] = list(dic['options'])
         return dic
     
     def titleQuiz(self): #the question is an extract and you need to match the correct title
