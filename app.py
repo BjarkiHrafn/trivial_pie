@@ -122,7 +122,7 @@ def EndGamePost():
                 data["nickName"] = 'Vondurkall'
             controllerClass.addQuizHighScore(data)
             controllerClass.correctAnswerArray = []
-    return redirect(url_for('MainMenu'))
+    return redirect(url_for('getHighScores'))
 
 
 @app.route('/highscore')

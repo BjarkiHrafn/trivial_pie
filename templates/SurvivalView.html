@@ -10,11 +10,15 @@
                     <input type="checkbox" id="goodQuestion" class="makeVisible" name="questionCheck" value="1">
                 </div>
                 
-                {% for i in range(lives)%}
+                <div id = "survivalStats">
+                    <p id="lives">Lives:
+                    {% for i in range(lives)%}    
                     <span class="glyphicon glyphicon-heart heart"></span>
-                {% endfor %}
-
-                <h2 name = "score">{{score}}</h2>
+                    {% endfor %}
+                    <br/>
+                    Current score: {{score}}</p>
+                </div>
+                
                 
                 {% for item in msg %}
                     <div class="singleQuestion"><i>{{item.title}}</i></div>
