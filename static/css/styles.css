@@ -75,6 +75,9 @@ button:hover{
     color: red;
 }
 
+#lives{
+    font-size: 1.5em;
+}
 .questionOption:hover{
     background-size: 100% 100%;
 }
@@ -87,16 +90,20 @@ button:hover{
     width: 100%;
     padding: 10px;
     text-align: center;
-  }
+}
 
-  .makeVisible {
-      opacity: 100 !important;
-  }
+.makeVisible {
+    opacity: 100 !important;
+}
 
-  .checkBoxContainer label, checkBoxContainer input{
+.checkBoxContainer label, checkBoxContainer input{
     display: inline-block;
-    vertical-align: middle;
-  }
+    vertical-align: middle; 
+    margin-right: 5px;
+}
+#goodQuestion{
+    pointer-events: all;
+}
 
 .headerButton {  
     font-size: 20px;
@@ -127,20 +134,22 @@ button:hover{
 #content{
     flex-grow: 12;
     flex-shrink: 0;
-    align-items: stretch;
+    display: flex;
     flex-direction: row;
-    background-color: red;
+    justify-content: space-between;
+    text-align: center;
+    font-size: 30px;
+    flex-shrink: 0;
 }
 
 .contentMiddle{
-    justify-content: center;
-    flex-grow: 12;
-    background-color: #4CAF50;
-    width: 300px;
+    background-color: green;
+    flex: 2;
 }
 
 .contentSide{
-    background-color: #3F9443
+    background-color: yellow;
+    flex: 1;
 }
 
 #footer {

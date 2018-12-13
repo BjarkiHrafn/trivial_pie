@@ -2,34 +2,35 @@
 
 {% block body %}
 
-    <div class="questionContainer disappear">
-        <div class="survival">
-            <form action = "{{ url_for('ProcessSurvivalQuestion')}}" method = "post" id="questionForm">
-                    
-                    <div class="checkBoxContainer">
-                        <label for="goodQuestion">Good question</label>
-                        <input type="checkbox" id="goodQuestion" class="makeVisible" name="questionCheck" value="1">
-                    </div>
-                    
-                    {% for i in range(lives)%}
-                        <span class="glyphicon glyphicon-heart heart"></span>
+    <div class="questionContainer">
+        <form action = "{{ url_for('ProcessSurvivalQuestion')}}" method = "post" id="questionForm">
+                
+                <div class="checkBoxContainer">
+                    <label for="goodQuestion" class="labelCheck">Good question</label>
+                    <input type="checkbox" id="goodQuestion" class="makeVisible" name="questionCheck" value="1">
+                </div>
+                
+                <div id = "survivalStats">
+                    <p id="lives">Lives:
+                    {% for i in range(lives)%}    
+                    <span class="glyphicon glyphicon-heart heart"></span>
                     {% endfor %}
-
-                    <h2 name = "score">{{score}}</h2>
-                    
-                    {% for item in msg %}
-                        <div class="singleQuestion"><i>{{item.title}}</i></div>
-                        {% for dict_item in item.options %}
-                            <div class="custom-control custom-radio">
-                                <input type="radio" class="custom-control-input" id="defaultUnchecked{{dict_item}}" name="ans" value="{{dict_item}}">
-                                <label class="custom-control-label" for="defaultUnchecked{{dict_item}}">{{dict_item[0]}}</label>
-                            </div>
-                        {% endfor %}
+                    <br/>
+                    Current score: {{score}}</p>
+                </div>
+                
+            
+                    <div class="singleQuestion"><i>{{item.title}}</i></div>
+                    {% for dict_item in item.options %}
+                        <div class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input" id="defaultUnchecked{{dict_item}}" name="ans" value="{{dict_item}}">
+                            <label class="custom-control-label" for="defaultUnchecked{{dict_item}}">{{dict_item[0]}}</label>
+                        </div>
                     {% endfor %}
-                    
-                    <button type="submit" name="submitAns" value={{msg}} id="submitButton">Submit!</button>
-            </form>
-        </div>
+        
+                
+                <button type="submit" name="submitAns" value={{msg}} id="submitButton">Submit!</button>
+        </form>
     </div>
     
 {% endblock %}
