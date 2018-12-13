@@ -91,7 +91,6 @@ button:hover{
     width: 100%;
     padding: 10px;
     text-align: center;
-
   }
 
   .makeVisible {
@@ -101,4 +100,7 @@ button:hover{
   .checkBoxContainer label, checkBoxContainer input{
     display: inline-block;
     vertical-align: middle; 
+  }
+  #load{
+      display: none;
   }

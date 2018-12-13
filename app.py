@@ -36,7 +36,7 @@ def MenuRedirect():
 
 def getQuestions(numberOfQuestions):
     return controllerClass.DeployQuestion(numberOfQuestions)
-
+    
 @app.route('/quiz')
 
 def QuizMenu():
