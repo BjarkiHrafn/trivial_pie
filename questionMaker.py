@@ -2,21 +2,25 @@ import re
 import json
 import getWiki
 
-
 class QuestionMaker:
 
     def parseQuestion(self):
         r = getWiki.getRandomWikiQuestion()
-        dir1 = json.loads(r.text) #parse json to python object
+        #parse json to python object
+        dir1 = json.loads(r.text) 
         dir2 = dir1['query']['pages']
-        title = dir2[list(dir2.keys())[0]]['title'] #pageid in the dict is random so we use .keys to bypass it
+        #pageid in the dict is random so we use .keys to bypass it
+        title = dir2[list(dir2.keys())[0]]['title'] 
         extract = dir2[list(dir2.keys())[0]]['extract']
         try:
-            extract = re.search('.*?\.(?= )', extract).group() # regex for first sentnence 
+            # regex for first sentnence 
+            extract = re.search('.*?\.(?= )', extract).group() 
+             #replace the key word with bleep
             extract = re.compile(
-                title + '(?= )|' + title.lower() + '(?= )').sub('*Bleep*', extract) #replace the key word with bleep
+                title + '(?= )|' + title.lower() + '(?= )').sub('*Bleep*', extract)
+            #replace the key word with a dash so the connected chars arent lost, for comprehension sake
             extract = re.compile(
-                title + '(?=\w)|' + title.lower() + '(?=\w)').sub('*Bleep*-', extract) #replace the key word with a dash so the connected chars arent lost, for comprehension sake
+                title + '(?=\w)|' + title.lower() + '(?=\w)').sub('*Bleep*-', extract) 
             extract.decode('ascii')
         except UnicodeDecodeError:
             print("it was not a ascii-encoded unicode string")
@@ -31,22 +35,29 @@ class QuestionMaker:
     def findAGoodQuestion(self):
         ret = 0
         while True:
-            ret = self.parseQuestion() #find a question were the extract contains *bleep* then it's considered a good question
+            #find a question were the extract contains *bleep* then it's considered a good question
+            ret = self.parseQuestion()
             if ret != None:
                 break
         return ret
 
-    def quiz(self): #the question is a title and you need to match the correct extract
+
+    #the question is a title and you need to match the correct extract
+    def quiz(self):
         question = self.findAGoodQuestion()
         options = set()
-        options.add((question[1], True)) #add to set since it will hash and order them randomly so we dont need to randomly sort them
+        #add to set since it will hash and order them randomly so we dont need to randomly sort them
+        options.add((question[1], True))
         dic = {'title': question[0], 'options': options, 'goodness': 0}
-        for i in range(3):  #add 3 extracts from completely different articles, these are the wrong answers
+        #add 3 extracts from completely different articles, these are the wrong answers
+        for i in range(3):
             dic['options'].add(tuple([self.findAGoodQuestion()[1], False]))
         dic['options'] = list(dic['options'])
         return dic
-    
-    def titleQuiz(self): #the question is an extract and you need to match the correct title
+
+
+    #the question is an extract and you need to match the correct title
+    def titleQuiz(self):
         question = self.findAGoodQuestion()
         options = set()
         options.add((question[0], True))
@@ -55,8 +66,10 @@ class QuestionMaker:
             dic['options'].add(tuple([self.findAGoodQuestion()[0], False]))
         dic['options'] = list(dic['options']) 
         return dic
-    
-    def trueOrFalse(self): #A title and either the correct extract or a wrong extract 
+
+        
+    #A title and either the correct extract or a wrong extract
+    def trueOrFalse(self):
         question = self.findAGoodQuestion()
         wrongQuestion = self.findAGoodQuestion()[1]
         options = set(((question[1], True), (wrongQuestion, False)))

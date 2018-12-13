@@ -13,6 +13,8 @@
                 {% for i in range(lives)%}
                     <span class="glyphicon glyphicon-heart heart"></span>
                 {% endfor %}
+
+                <h2 name = "score">{{score}}</h2>
                 
                 {% for item in msg %}
                     <div class="singleQuestion"><i>{{item.title}}</i></div>

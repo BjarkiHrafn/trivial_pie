@@ -8,14 +8,17 @@ import db
 
 class Controller(object):
 
-    answer = ""
-    goodQuestions = []
-    survivalModeLives = 5
-    survivalModeArray = []
-    quizModeArray = []
-    correctAnswerArray = []
-    currentGameMode = ""
-    numberOfQuestionsForQuiz = 5
+
+    def __init__(self):
+        self.answer = ""
+        self.goodQuestions = []
+        self.survivalModeLives = 5
+        self.survivalModeArray = []
+        self.quizModeArray = []
+        self.correctAnswerArray = []
+        self.currentGameMode = ""
+        self.numberOfQuestionsForQuiz = 5
+        self.currentScore = 0
 
     def DeployQuestion(self, numbOfQuest):
 
@@ -44,17 +47,17 @@ class Controller(object):
 
         return questions
     def addSurvivalHichScore(self, data):
-        db.repository().addSurvivalHichScore(data)
+        db.Repository().addSurvivalHichScore(data)
 
     def addQuizHighScore(self, data):
-        db.repository().addQuizHighScore(data)
-        
+        db.Repository().addQuizHighScore(data)
+
     def addToGoodQuestions(self, data):
-        db.repository().addToGoodQuestions(data)
+        db.Repository().addToGoodQuestions(data)
 
     def getQuizHighScores(self):
-        return db.repository().getQuizHighscore()
+        return db.Repository().getQuizHighscore()
 
     def getSurvivalHighScores(self):
-        return db.repository().getSurvivalHighscore()
+        return db.Repository().getSurvivalHighscore()
 

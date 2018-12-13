@@ -1,13 +1,10 @@
 from bson.objectid import ObjectId
 from pymongo import MongoClient, ReturnDocument
 import pymongo
-
-import json
-
 import questionMaker
 
 
-class repository(object):
+class Repository(object):
     # connectionstring to a mongo database on mlab
     def __init__(self):
         MONGODB_URI = "mongodb://abc123:abc123@ds011422.mlab.com:11422/pie"
@@ -37,7 +34,6 @@ class repository(object):
                 "title": data["title"],
                 "options": data["options"]
             }, {'$inc': {"goodness": 1}}, upsert=True)
-        return "tibi"
 
     def findQuestionByTitle(self, title):
         question = self.goodQuestions.find_one({"title": title})

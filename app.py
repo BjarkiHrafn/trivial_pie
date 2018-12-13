@@ -1,13 +1,7 @@
 from flask import Flask, render_template, request, url_for, redirect
 from ControllerClass import Controller
-<<<<<<< HEAD
-import sys #this is to print to console
-=======
-from db import repository
-import sys
-import re
+import sys # prints to console
 import badWords
->>>>>>> ad54a4a8b264c412a261069d81708cecbab16ab0
 
 app = Flask(__name__)
 app.debug = True
@@ -43,7 +37,7 @@ def getQuestions(numberOfQuestions):
 def QuestionMenu():
     questions = getQuestions(1)
     controllerClass.currentGameMode = "survival"
-    return render_template('SurvivalView.html', msg=questions, lives=controllerClass.survivalModeLives)
+    return render_template('SurvivalView.html', msg=questions, lives=controllerClass.survivalModeLives, score = controllerClass.currentScore)
 
 
 @app.route('/survival', methods=['POST'])
@@ -57,6 +51,8 @@ def ProcessSurvivalQuestion():
             controllerClass.survivalModeLives -= 1
             if controllerClass.survivalModeLives == 0:
                 return redirect(url_for('EndGameGet'))
+        else:
+            controllerClass.currentScore += 1
         controllerClass.survivalModeArray.append(outcome)
         return redirect(url_for('QuestionMenu'))
 
@@ -116,7 +112,7 @@ def EndGamePost():
             data = {"nickName": nickname, "score": score}
             if data["nickName"].lower() in badWords.bad:
                 data["nickName"] = 'Vondurkall'
-            database.addSurvivalHichScore(data)
+            controllerClass.addSurvivalHichScore(data)
             controllerClass.survivalModeArray = []
         elif controllerClass.currentGameMode == "quiz":
             nickname = request.form.get('nicknamePick')
@@ -124,7 +120,7 @@ def EndGamePost():
             data = {"nickName": nickname, "score": score}
             if data["nickName"].lower() in badWords.bad:
                 data["nickName"] = 'Vondurkall'
-            database.addQuizHighScore(data)
+            controllerClass.addQuizHighScore(data)
             controllerClass.correctAnswerArray = []
     return redirect(url_for('MainMenu'))
 
