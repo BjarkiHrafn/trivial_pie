@@ -91,7 +91,6 @@ button:hover{
     width: 100%;
     padding: 10px;
     text-align: center;
-
   }
 
   .makeVisible {
@@ -173,3 +172,6 @@ button:hover{
 #menuform{
     float: left;
 }
+  #load{
+      display: none;
+  }
