@@ -3,6 +3,7 @@ from ControllerClass import Controller
 from db import repository
 import sys
 import re
+import badWords
 
 app = Flask(__name__)
 controllerClass = Controller()
@@ -117,6 +118,8 @@ def EndGamePost():
             print("nickname: ", nickname, file=sys.stderr)
             score = len(controllerClass.survivalModeArray)
             data = {"nickName": nickname, "score": score}
+            if data["nickName"].lower() in badWords.bad:
+                data["nickName"] = 'Vondurkall'
             database.addSurvivalHichScore(data)
             controllerClass.survivalModeArray = []
         elif controllerClass.currentGameMode == "quiz":
