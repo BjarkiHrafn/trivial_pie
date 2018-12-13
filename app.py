@@ -89,12 +89,9 @@ def PostAnswer():
             #ans = request.form.get("ans")
             
             questionArr = []
-            #everything = request.form
             score = 0
-            #print("all: ", everything,  file = sys.stderr)
-            
            
-                 
+            for i in range(controllerClass.numberOfQuestionsForQuiz):     
                 question = request.form.get(str(i))
                 if question:
                     answer = eval(question)[1]
@@ -103,39 +100,8 @@ def PostAnswer():
                 
                 
                 checkbox = request.form.get('questionCheck'+ str(i))
-                
                 if checkbox == '':
-                    print("checkbox was clicked",  file = sys.stderr)
-                    print("checkbox: ", controllerClass.quizModeArray[i],  file = sys.stderr)
                     database.addToGoodQuestions(controllerClass.quizModeArray[i])
-                
-            
-            #print('score:'+ score, file = sys.stderr)
-            
-            
-            
-            
-            '''
-            try:
-                question = request.form
-                question = dict(question)
-                question.pop('submitAns')
-            except KeyError:
-                pass
-
-            print("all: ", question,  file = sys.stderr)
-            #if checkbox:
-            #    print("checkbox selected, question: ", question , file=sys.stderr)
-            
-            for key in range(len(question)):
-                if eval(question[str(key+1)])[1]:
-                    #controllerClass.quizModeArray.append(question[str(key+1)])
-
-                    print("question: " + str(key+1), eval(question[str(key+1)]),  file = sys.stderr)
-                    #print("buttonChecked: ", question['questionCheck'+str(key+1)],  file = sys.stderr)
-
-            '''
-            #controllerClass.answer = question 
             
             return redirect(url_for('EndGameGet'))
         elif 'menu' in request.form:
