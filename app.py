@@ -137,6 +137,8 @@ def EndGamePost():
         elif controllerClass.currentGameMode == "quiz":
             score = len(controllerClass.correctAnswerArray)
             data = {"nickName": nickname, "score": score}
+            if data["nickName"].lower() in badWords.bad:
+                data["nickName"] = 'Vondurkall'
             database.addQuizHighScore(data)
             controllerClass.correctAnswerArray = []
     return redirect(url_for('MainMenu'))
