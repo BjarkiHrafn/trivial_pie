@@ -91,7 +91,6 @@ button:hover{
     width: 100%;
     padding: 10px;
     text-align: center;
-
   }
 
   .makeVisible {
@@ -101,4 +100,78 @@ button:hover{
   .checkBoxContainer label, checkBoxContainer input{
     display: inline-block;
     vertical-align: middle; 
+  }
+
+.gameModeButton {  
+    font-size: 24px;
+    height: 100%;
+}
+
+#quizGameMode {
+    background-color: #3F9443
+}
+
+#header {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 25px;
+    text-align: center;
+    background: #00A5CF;
+    color: white;
+    font-size: 30px;
+}
+
+#headerLogo{
+    display: flex;
+    flex: 1
+}
+#headerTitle{
+    display: flex;
+    flex: 1
+}
+#headerGameModes{
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+#footer {
+    height: 100px;
+    padding: 25px;
+    position: absolute;
+    text-align: center;
+    bottom: 0px;  
+    background-color: #004788;
+    display: block;
+    width: 100%;
+}
+
+.logoContainer{
+    float: left;
+    width: 100px;
+}
+
+.logo{
+    width: 100px;
+    float: left;
+    opacity: 100%;
+}
+
+.logoButton{
+    width: 120px;
+    height: 80px;
+    position: absolute;
+    top: 5;
+    left: 0;
+    opacity: 0;
+}
+
+#menuform{
+    float: left;
+}
+  #load{
+      display: none;
   }

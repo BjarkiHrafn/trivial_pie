@@ -14,7 +14,9 @@ class Controller(object):
     survivalModeLives = 5
     survivalModeArray = []
     quizModeArray = []
+    correctAnswerArray = []
     currentGameMode = ""
+    numberOfQuestionsForQuiz = 5
     #self.answer = answer
 
     def DeployQuestion(self, numbOfQuest):
