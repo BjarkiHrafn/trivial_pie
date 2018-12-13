@@ -12,25 +12,30 @@ database = repository()
 app.debug = True
 
 
-@app.route('/')
+@app.route('/', methods=['GET'])
 def MasterMenu():
     # return render_template('MasterView.html', msg="some messaage")
     return render_template('MenuView.html')
 
 
-@app.route('/menu')
+@app.route('/menu', methods=['GET'])
 # questions, create question etc...
 def MainMenu():
     return render_template('MenuView.html')
 
 
-@app.route('/menu', methods=['GET', 'POST'])
+@app.route('/menu', methods=['POST'])
 def MenuRedirect():
+    print("testing123!!!!!")
+    print(request.form)
 
     if 'quiz' in request.form:
         return redirect(url_for('QuizMenu'))
     elif 'survival' in request.form:
         return redirect(url_for('QuestionMenu'))
+    elif 'menu' in request.form:
+        print("herro")
+        return redirect(url_for('MainMenu'))
 
 
 def getQuestions(numberOfQuestions):
@@ -81,7 +86,7 @@ def PostAnswer():
         # When you answer the controllerClass.answer gets the value
         # and you are redirected to another question or to the menu
         if 'submitAns' in request.form:
-            #ans = request.form.get("ans")
+            # ans = request.form.get("ans")
             question = request.form
             question = dict(question)
 
@@ -91,7 +96,7 @@ def PostAnswer():
                 if eval(question[str(key+1)])[1]:
                     controllerClass.quizModeArray.append(question[str(key+1)])
 
-            #controllerClass.answer = question
+            # controllerClass.answer = question
             return redirect(url_for('EndGameGet'))
         elif 'menu' in request.form:
             return redirect(url_for('MainMenu'))
