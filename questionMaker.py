@@ -1,6 +1,6 @@
 import re
 import json
-import getWiki
+import getWiki 
 
 class QuestionMaker:
 
