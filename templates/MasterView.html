@@ -1,48 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
-    <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Trivial Pie</title>
-</head>
-<body>
-    <div id="header" >
-        <div id="headerLogo">
-            <form action = "{{ url_for('MenuRedirect')}}" method = "post" id="mainManuForm">
-                <div class="logoContainer">
-                    <img src="{{ url_for('static', filename = 'logo.png',)}}" class = "logo"></img>
-                    <button type="submit" name="menu" class="logoButton"></button>
-                </div>
-            </form>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+        <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>WikiPydia</title>
+    </head>
+    <body>
+        <div id="header" >
+            <div id="headerLogo">
+                <form action = "{{ url_for('MenuRedirect')}}" method = "post" id="mainManuForm">
+                    <div class="logoContainer">
+                        <img src="{{ url_for('static', filename = 'logo.png',)}}" class = "logo"></img>
+                        <button type="submit" name="menu" class="logoButton"></button>
+                    </div>
+                </form>
+            </div>
+            <div id="headerTItle">
+                <h1 class="title">WikiPydia</h1>
+            </div>
+            <div id="headerGameModes">
+                <form action = "{{ url_for('MenuRedirect')}}" method = "post" class="questionForm">
+                    <div class="gameModes">
+                        <button type="submit" name="quiz" class="gameModeButton">Take a quiz</button>
+                        <button type="submit" name="survival" class="gameModeButton">Survival mode</button>
+                    </div>
+                </form>
+            </div>
         </div>
-        <div id="headerTItle">
-            <h1 class="title">WikiPiediaScrape.py </h1>
-        </div>
-        <div id="headerGameModes">
-            <form action = "{{ url_for('MenuRedirect')}}" method = "post" id="questionForm">
-                <div class="gameModes">
-                    <button type="submit" name="quiz" class="gameModeButton">Take a quiz</button>
-                    <button type="submit" name="survival" class="gameModeButton">Survival mode</button>
-                </div>
-            </form>
-        </div>
-    </div>
-    <div class="container">
-        {% block body %} 
+        <div class="container">
+            {% block body %} 
 
-        {% endblock %} 
-    </div>
-    <div id="footer">
-        <a href="https://en.wikipedia.org/wiki/Wikipedia:Random">About Wikipedia:Random</a>
-    </div>
+            {% endblock %} 
+        </div>
+        {% raw %}
+
+        <div id="load" class='center'>
+            <h1>Scraping Wikipedia for questions</h1>
+            <img id="loading" src="/static/loading.gif"></img>
+        </div>
+        
+        {% endraw %}
+        <script>
+            var form = document.getElementsByClassName("questionForm")
+            for(var i = 0; i < form.length; i++){
+                form[i].onclick = function() {document.getElementById("load").setAttribute("style", "display: block");
+                document.getElementsByClassName("questionContainer")[0].setAttribute("style", "display: none")};
+            }
+        </script>
+        <div id="footer">
+            <a href="https://en.wikipedia.org/wiki/Wikipedia:Random">About Wikipedia:Random</a>
+        </div>
 </body>
 </html>

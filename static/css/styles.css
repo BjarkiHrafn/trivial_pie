@@ -10,10 +10,11 @@ body{
     -webkit-transform: translate(-50%,-50%);
     max-height: 70%;
     overflow-y: scroll;
+    display: block;
 
 }
 
-#questionForm{
+.questionForm{
     display: -webkit-flex; /* Safari */
     -webkit-align-items: center; /* Safari 7.0+ */
     display: flex;
@@ -76,7 +77,10 @@ button:hover{
   transition: background-size 1s;
   text-align: center;
   margin: auto;
+}
 
+.heart{
+    color: red;
 }
 
 .questionOption:hover{
@@ -172,6 +176,6 @@ button:hover{
 #menuform{
     float: left;
 }
-  #load{
+#load{
       display: none;
-  }
+}
