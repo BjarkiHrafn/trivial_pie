@@ -1,17 +1,11 @@
-body{
-    margin: 0;
-    padding: 0;
+html, body{
+    width: 100%;
+    height: 100%;
 }
 
 .questionContainer{
-    position: absolute;
-    top: 50%;
-    left:50%;
-    -webkit-transform: translate(-50%,-50%);
-    max-height: 70%;
-    overflow-y: scroll;
-    display: block;
-
+    justify-content: center;
+    align-content: center;
 }
 
 .questionForm{
@@ -48,7 +42,7 @@ body{
 #submitButton{
     border-radius: 6px;
     font-size: 16px;
-    width: 25%;
+    width: 250px;
     height: 50px;
     border: 2px #ffffff solid;
     background-color: #4CAF50;
@@ -61,8 +55,6 @@ body{
 
 #submitButton:hover{
     background-color: #3F9443;
-    border-width: 20px;
-    height: auto;
 }
 
 button:hover{
@@ -103,28 +95,64 @@ button:hover{
 
   .checkBoxContainer label, checkBoxContainer input{
     display: inline-block;
-    vertical-align: middle; 
+    vertical-align: middle;
   }
 
-.gameModeButton {  
-    font-size: 24px;
+.headerButton {  
+    font-size: 20px;
     height: 100%;
+    width: 150px
 }
 
 #quizGameMode {
     background-color: #3F9443
 }
 
+#AllContent{
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
 #header {
     display: flex;
-    flex: 1;
     flex-direction: row;
     justify-content: space-between;
-    padding: 25px;
     text-align: center;
     background: #00A5CF;
     color: white;
     font-size: 30px;
+    flex-shrink: 0;
+}
+#content{
+    flex-grow: 12;
+    flex-shrink: 0;
+    align-items: stretch;
+    flex-direction: row;
+    background-color: red;
+}
+
+.contentMiddle{
+    justify-content: center;
+    flex-grow: 12;
+    background-color: #4CAF50;
+    width: 300px;
+}
+
+.contentSide{
+    background-color: #3F9443
+}
+
+#footer {
+    height: 20%;
+    display: flex;
+    text-align: center; 
+    background-color: #004788;
+    flex-shrink: 0;
+}
+
+#container{
+    flex: 1;
 }
 
 #headerLogo{
@@ -140,17 +168,6 @@ button:hover{
     flex: 1;
     justify-content: flex-end;
     align-items: center;
-}
-
-#footer {
-    height: 100px;
-    padding: 25px;
-    position: absolute;
-    text-align: center;
-    bottom: 0px;  
-    background-color: #004788;
-    display: block;
-    width: 100%;
 }
 
 .logoContainer{
@@ -178,4 +195,32 @@ button:hover{
 }
 #load{
       display: none;
+}
+
+#scoreBoardConatiner{
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#quiz{
+    flex-direction: column;
+    display: flex;
+    width: 50%;
+    align-content: center;
+    padding: 5px;
+}
+
+#survival{
+    flex-direction: column;
+    display: flex;
+    width: 50%;
+    align-content: center;
+    padding: 5px;
+}
+
+.survival{
+    align-items: center;
+    justify-content: center;
 }

@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, url_for, redirect
 from ControllerClass import Controller
-import sys # prints to console
+import sys  # prints to console
 import badWords
 
 app = Flask(__name__)
@@ -8,15 +8,18 @@ app.debug = True
 
 controllerClass = Controller()
 
+
 @app.route('/', methods=['GET'])
 def MasterMenu():
     # return render_template('MasterView.html', msg="some messaage")
     return render_template('MenuView.html')
 
+
 @app.route('/menu', methods=['GET'])
 # questions, create question etc...
 def MainMenu():
     return render_template('MenuView.html')
+
 
 @app.route('/menu', methods=['POST'])
 def MenuRedirect():
@@ -26,6 +29,8 @@ def MenuRedirect():
         return redirect(url_for('QuestionMenu'))
     elif 'menu' in request.form:
         return redirect(url_for('MainMenu'))
+    elif 'highScore' in request.form:
+        return redirect(url_for('GetHighScores'))
 
 
 def getQuestions(numberOfQuestions):
@@ -37,7 +42,7 @@ def getQuestions(numberOfQuestions):
 def QuestionMenu():
     questions = getQuestions(1)
     controllerClass.currentGameMode = "survival"
-    return render_template('SurvivalView.html', msg=questions, lives=controllerClass.survivalModeLives, score = controllerClass.currentScore)
+    return render_template('SurvivalView.html', msg=questions, lives=controllerClass.survivalModeLives, score=controllerClass.currentScore)
 
 
 @app.route('/survival', methods=['POST'])
@@ -62,10 +67,10 @@ def ResultMenu():
     return render_template('ResultView.html', result=controllerClass.answer, goodQuestion=controllerClass.goodQuestions)
 
 
-
 @app.route('/quiz', methods=['GET'])
 def QuizMenu():
-    controllerClass.quizModeArray = getQuestions(controllerClass.numberOfQuestionsForQuiz)
+    controllerClass.quizModeArray = getQuestions(
+        controllerClass.numberOfQuestionsForQuiz)
     controllerClass.currentGameMode = "quiz"
     return render_template('QuizView.html', questions=controllerClass.quizModeArray)
 
@@ -126,7 +131,7 @@ def EndGamePost():
 
 
 @app.route('/highscore')
-def getHighScores():
+def GetHighScores():
     return render_template('highscore.html', quiz=controllerClass.getQuizHighScores(), survival=controllerClass.getSurvivalHighScores())
 
 

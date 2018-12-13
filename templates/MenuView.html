@@ -2,10 +2,10 @@
 
 {% block body %}
     
-    <form action = "{{ url_for('MenuRedirect')}}" method = "post" class="questionForm">
+    <form action = "{{ url_for('MenuRedirect')}}" method = "post" class="questionForm disappear gameModes">
         <div>
-            <button type="submit" name="quiz" class="gameModeButton">Take a quiz</button>
-            <button class="gameModeButton" type="submit" name="survival">Survival mode</button>
+            <button type="submit" name="quiz" class="headerButton">Take a quiz</button>
+            <button class="headerButton" type="submit" name="survival">Survival mode</button>
         </div>
     </form>
 {% endblock %}
