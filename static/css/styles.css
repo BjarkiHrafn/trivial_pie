@@ -8,8 +8,8 @@ body{
     top: 50%;
     left:50%;
     -webkit-transform: translate(-50%,-50%);
-    max-height: 70%;
-    overflow-y: scroll;
+    max-height: 100%;
+    overflow-y: auto;
     display: block;
 
 }
@@ -98,16 +98,20 @@ button:hover{
     width: 100%;
     padding: 10px;
     text-align: center;
-  }
+}
 
-  .makeVisible {
-      opacity: 100 !important;
-  }
+.makeVisible {
+    opacity: 100 !important;
+}
 
-  .checkBoxContainer label, checkBoxContainer input{
+.checkBoxContainer label, checkBoxContainer input{
     display: inline-block;
     vertical-align: middle; 
-  }
+    margin-right: 5px;
+}
+#goodQuestion{
+    pointer-events: all;
+}
 
 .gameModeButton {  
     font-size: 24px;

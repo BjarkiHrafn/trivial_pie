@@ -67,7 +67,7 @@ class QuestionMaker:
         dic['options'] = list(dic['options']) 
         return dic
 
-        
+
     #A title and either the correct extract or a wrong extract
     def trueOrFalse(self):
         question = self.findAGoodQuestion()
