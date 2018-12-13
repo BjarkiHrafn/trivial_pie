@@ -35,9 +35,15 @@ def getQuestions(numberOfQuestions):
 @app.route('/survival')
 # Post the questions here
 def QuestionMenu():
-    questions = getQuestions(1)
+    
+    if len(controllerClass.listOFGoodQuestionsAlreadyAdded) == 0:
+        questions = getQuestions(1)
+    else:
+        questions = controllerClass.listOFGoodQuestionsAlreadyAdded[0]
+    if len(controllerClass.listOFGoodQuestionsAlreadyAdded) != 0:
+        controllerClass.listOFGoodQuestionsAlreadyAdded.pop(0)
     controllerClass.currentGameMode = "survival"
-    return render_template('SurvivalView.html', msg=questions, lives=controllerClass.survivalModeLives, score = controllerClass.currentScore)
+    return render_template('SurvivalView.html', lives=controllerClass.survivalModeLives, score = controllerClass.currentScoreSurvival, item = questions)
 
 
 @app.route('/survival', methods=['POST'])
@@ -52,7 +58,10 @@ def ProcessSurvivalQuestion():
             if controllerClass.survivalModeLives == 0:
                 return redirect(url_for('EndGameGet'))
         else:
-            controllerClass.currentScore += 1
+            if outcome[0] == 'True' or outcome[0] == 'False':
+               controllerClass.currentScoreSurvival += 2  
+            else:
+                controllerClass.currentScoreSurvival += 4
         controllerClass.survivalModeArray.append(outcome)
         return redirect(url_for('QuestionMenu'))
 
@@ -77,14 +86,17 @@ def PostAnswer():
         # When you answer the controllerClass.answer gets the value
         # and you are redirected to another question or to the menu
         if 'submitAns' in request.form:
-            score = 0
 
             for i in range(controllerClass.numberOfQuestionsForQuiz):
                 question = request.form.get(str(i))
                 if question:
                     answer = eval(question)[1]
                     if answer:
-                        controllerClass.correctAnswerArray.append(
+                        if outcome[0] == 'True' or outcome[0] == 'False':
+                            controllerClass.currentScoreQuiz += 2  
+                        else:
+                            controllerClass.currentScoreQuiz += 4
+                            controllerClass.correctAnswerArray.append(
                             controllerClass.quizModeArray[i])
 
                 checkbox = request.form.get('questionCheck' + str(i))
@@ -108,20 +120,23 @@ def EndGamePost():
 
         if controllerClass.currentGameMode == "survival":
             nickname = request.form.get('nicknamePick')
-            score = len(controllerClass.survivalModeArray)
+
+            score = controllerClass.currentScoreSurvival
             data = {"nickName": nickname, "score": score}
             if data["nickName"].lower() in badWords.bad:
                 data["nickName"] = 'Vondurkall'
             controllerClass.addSurvivalHichScore(data)
             controllerClass.survivalModeArray = []
+            controllerClass.currentScoreSurvival = 0
         elif controllerClass.currentGameMode == "quiz":
             nickname = request.form.get('nicknamePick')
-            score = len(controllerClass.correctAnswerArray)
+            score = controllerClass.currentScoreQuiz
             data = {"nickName": nickname, "score": score}
             if data["nickName"].lower() in badWords.bad:
                 data["nickName"] = 'Vondurkall'
             controllerClass.addQuizHighScore(data)
             controllerClass.correctAnswerArray = []
+            controllerClass.currentScoreQuiz = 0
     return redirect(url_for('getHighScores'))
 
 

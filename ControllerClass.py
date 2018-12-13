@@ -18,7 +18,9 @@ class Controller(object):
         self.correctAnswerArray = []
         self.currentGameMode = ""
         self.numberOfQuestionsForQuiz = 5
-        self.currentScore = 0
+        self.currentScoreSurvival = 0
+        self.currentScoreQuiz = 0
+        self.listOFGoodQuestionsAlreadyAdded = self.deployGoodQuestion()
 
     def DeployQuestion(self, numbOfQuest):
 
@@ -46,6 +48,9 @@ class Controller(object):
                 break
 
         return questions
+    def deployGoodQuestion(self):
+        return db.Repository().getAllGoodQuestionsInOrderOfBestQuestions()
+
     def addSurvivalHichScore(self, data):
         db.Repository().addSurvivalHichScore(data)
 

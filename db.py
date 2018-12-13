@@ -16,8 +16,14 @@ class Repository(object):
 
     def getAllGoodQuestionsInOrderOfBestQuestions(self):
         goodQuestionLis = []
-        for document in self.goodQuestions.find().sort('points', pymongo.DESCENDING):
-            goodQuestionLis.append(document)
+        dictObject = {}
+        for document in self.goodQuestions.find().sort('goodness', pymongo.DESCENDING):
+            dictObject = {
+                'options': [tuple(x) for x in document['options']],
+                'title': document['title'],
+                'goodness': document['goodness']
+            }
+            goodQuestionLis.append(dictObject)
         return goodQuestionLis
 
     ### --- Good Questions --- ###
