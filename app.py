@@ -167,5 +167,11 @@ def EndGamePost():
             controllerClass.correctAnswerArray = []
     return redirect(url_for('MainMenu'))
 
+@app.route('/highscore')
+def getHighScores():
+    return render_template('highscore.html', quiz = controllerClass.getQuizHighScores(), survival = controllerClass.getSurvivalHighScores())
+
+
 if __name__ == '__main__':
     app.run()
+
