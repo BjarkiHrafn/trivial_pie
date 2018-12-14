@@ -120,7 +120,11 @@ def PostAnswer():
 
 @app.route('/endgame')
 def EndGameGet():
-    return render_template('EndGameMenu.html')
+    print("score: ", controllerClass.currentScoreQuiz, type(controllerClass.currentScoreQuiz), file=sys.stderr)
+    if controllerClass.currentGameMode == 'survival':
+        return render_template('EndGameMenu.html', score = controllerClass.currentScoreSurvival)
+    else:
+        return render_template('EndGameMenuQuiz.html', answerRate = controllerClass.currentScoreQuiz[0], grade = controllerClass.currentScoreQuiz[1])
 
 
 @app.route('/endgame', methods=['GET', 'POST'])
