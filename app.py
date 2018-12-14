@@ -118,9 +118,11 @@ def PostAnswer():
                     controllerClass.currentScoreQuiz += answer[1]
             except KeyError:
                 pass
+        if controllerClass.currentScoreQuiz != 0:
             points = str(controllerClass.currentScoreQuiz) + '/' + str(totalScore)
+            print(points, file=sys.stderr)
             grade = f'{eval(points) * 10:.2f}'
-        controllerClass.currentScoreQuiz = [points, eval(grade)]
+            controllerClass.currentScoreQuiz = [points, eval(grade)]
     return redirect(url_for('EndGameGet'))
 
 @app.route('/endgame')
