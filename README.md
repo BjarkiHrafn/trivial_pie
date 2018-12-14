@@ -41,14 +41,6 @@ python -m pip install bson
 
 py app.py
 
-### Heroku
-
-https://wikipydia.herokuapp.com/?fbclid=IwAR2XcsD5PZ4rfVzW-1rSs6iVF-fAEeQ-c-GDOzhVIolVSdZaD2vQOehG61o
-
-## Known bugs
-
-Survival games on Herku do not work correctly, propably due to cache errors
-
 ## Built With
 
 * [mlab](https://mlab.com/) - Database-as-a-Service for MongoDB
