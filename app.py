@@ -5,7 +5,6 @@ import badWords
 
 app = Flask(__name__)
 app.debug = True
-
 controllerClass = Controller()
 
 
@@ -26,7 +25,7 @@ def MenuRedirect():
     if 'quiz' in request.form:
         return redirect(url_for('QuizMenu'))
     elif 'survival' in request.form:
-        return redirect(url_for('QuestionMenu'))
+        return redirect(url_for('RedirectToSurvival'))
     elif 'menu' in request.form:
         return redirect(url_for('MainMenu'))
 
@@ -35,38 +34,43 @@ def getQuestions(numberOfQuestions):
     return controllerClass.DeployQuestion(numberOfQuestions)
 
 
+@app.route('/newgame')
+def RedirectToSurvival():
+    controllerClass.__init__()
+    return redirect(url_for('survival'))
+
+
 @app.route('/survival')
 # Post the questions here
-def QuestionMenu():
+def survival():
 
     if len(controllerClass.listOFGoodQuestionsAlreadyAdded) == 0:
         questions = getQuestions(1)
     else:
         questions = controllerClass.listOFGoodQuestionsAlreadyAdded[0]
-    if len(controllerClass.listOFGoodQuestionsAlreadyAdded) != 0:
-        controllerClass.listOFGoodQuestionsAlreadyAdded.pop(0)
+
     controllerClass.currentGameMode = "survival"
     return render_template('SurvivalView.html', lives=controllerClass.survivalModeLives, score=controllerClass.currentScoreSurvival, item=questions)
 
 
 @app.route('/survival', methods=['POST'])
 def ProcessSurvivalQuestion():
-    if 'submitAns'in request.form:
-        outcome = eval(request.form.get("ans"))
-        checkbox = request.form.get('questionCheck')
-        if checkbox:
-            controllerClass.goodQuestions.append(outcome[0])
-        if not outcome[1]:
-            controllerClass.survivalModeLives -= 1
-            if controllerClass.survivalModeLives == 0:
-                return redirect(url_for('EndGameGet'))
+    if 'submitChoice' in request.form:
+        if len(controllerClass.listOFGoodQuestionsAlreadyAdded) != 0:
+            controllerClass.listOFGoodQuestionsAlreadyAdded.pop(0)
+        wholeForm = request.form
+        addToGood = wholeForm.get('questionCheck')
+        if addToGood:
+            controllerClass.addToGoodQuestions(eval(addToGood))
+        answer = wholeForm.get('choice')
+        if answer and eval(answer)[1]:
+            score = wholeForm.get('points')
+            controllerClass.currentScoreSurvival += int(score)
         else:
-            if outcome[0] == 'True' or outcome[0] == 'False':
-                controllerClass.currentScoreSurvival += 2
-            else:
-                controllerClass.currentScoreSurvival += 4
-        controllerClass.survivalModeArray.append(outcome)
-        return redirect(url_for('QuestionMenu'))
+            controllerClass.survivalModeLives -= 1
+        if controllerClass.survivalModeLives < 1:
+            return redirect(url_for('EndGameGet'))
+        return redirect(url_for('survival'))
 
 
 @app.route('/results')
@@ -120,17 +124,13 @@ def EndGameGet():
 @app.route('/endgame', methods=['GET', 'POST'])
 def EndGamePost():
     if 'submitScore' in request.form:
-
         if controllerClass.currentGameMode == "survival":
             nickname = request.form.get('nicknamePick')
-
             score = controllerClass.currentScoreSurvival
             data = {"nickName": nickname, "score": score}
             if data["nickName"].lower() in badWords.bad:
                 data["nickName"] = 'Vondurkall'
             controllerClass.addSurvivalHichScore(data)
-            controllerClass.survivalModeArray = []
-            controllerClass.currentScoreSurvival = 0
         elif controllerClass.currentGameMode == "quiz":
             nickname = request.form.get('nicknamePick')
             score = controllerClass.currentScoreQuiz
@@ -138,14 +138,18 @@ def EndGamePost():
             if data["nickName"].lower() in badWords.bad:
                 data["nickName"] = 'Vondurkall'
             controllerClass.addQuizHighScore(data)
-            controllerClass.correctAnswerArray = []
-            controllerClass.currentScoreQuiz = 0
+        controllerClass.__init__()
     return redirect(url_for('getHighScores'))
 
 
 @app.route('/highscore')
 def getHighScores():
     return render_template('highscore.html', quiz=controllerClass.getQuizHighScores(), survival=controllerClass.getSurvivalHighScores())
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('MenuView.html'), 404
 
 
 if __name__ == '__main__':

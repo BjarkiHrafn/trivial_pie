@@ -7,7 +7,7 @@
                 
                 <div class="checkBoxContainer">
                     <label for="goodQuestion" class="labelCheck">Good question</label>
-                    <input type="checkbox" id="goodQuestion" class="makeVisible" name="questionCheck" value="1">
+                    <input type="checkbox" id="goodQuestion" class="makeVisible" name="questionCheck" value="{{item}}">
                 </div>
                 
                 <div id = "survivalStats">
@@ -18,18 +18,15 @@
                     <br/>
                     Current score: {{score}}</p>
                 </div>
-                
-            
-                    <div class="singleQuestion questionTitle"><i>{{item.title}}</i></div>
-                    {% for dict_item in item.options %}
-                        <div class="custom-control custom-radio">
-                            <input type="radio" class="custom-control-input" id="defaultUnchecked{{dict_item}}" name="ans" value="{{dict_item}}">
-                            <label class="custom-control-label quizOption" for="defaultUnchecked{{dict_item}}">{{dict_item[0]}}</label>
-                        </div>
-                    {% endfor %}
-        
-                
-                <button class="submitButton" type="submit" name="submitAns" value={{msg}}>Submit!</button>
+                <div class="singleQuestion"><i>{{item.title}}</i></div>
+                {% for dict_item in item.options %}
+                    <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" id="defaultUnchecked{{dict_item}}" name="choice" value="{{dict_item}}">
+                        <label class="custom-control-label" for="defaultUnchecked{{dict_item}}">{{dict_item[0]}}</label>
+                    </div>
+                {% endfor %}
+                <input type='hidden' name='points' value='{{item.options|length}}'>
+                <button class="submitButton" type="submit" name="submitChoice">Submit!</button>
         </form>
     </div>
     
