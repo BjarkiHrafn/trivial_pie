@@ -1,21 +1,24 @@
 from flask import Flask, render_template, request, url_for, redirect
 from ControllerClass import Controller
-import sys # prints to console
+import sys  # prints to console
 import badWords
 
 app = Flask(__name__)
 app.debug = True
 controllerClass = Controller()
 
+
 @app.route('/', methods=['GET'])
 def MasterMenu():
     # return render_template('MasterView.html', msg="some messaage")
     return render_template('MenuView.html')
 
+
 @app.route('/menu', methods=['GET'])
 # questions, create question etc...
 def MainMenu():
     return render_template('MenuView.html')
+
 
 @app.route('/menu', methods=['POST'])
 def MenuRedirect():
@@ -30,22 +33,24 @@ def MenuRedirect():
 def getQuestions(numberOfQuestions):
     return controllerClass.DeployQuestion(numberOfQuestions)
 
+
 @app.route('/newgame')
 def RedirectToSurvival():
     controllerClass.__init__()
     return redirect(url_for('survival'))
 
+
 @app.route('/survival')
 # Post the questions here
 def survival():
-    
+
     if len(controllerClass.listOFGoodQuestionsAlreadyAdded) == 0:
         questions = getQuestions(1)
     else:
         questions = controllerClass.listOFGoodQuestionsAlreadyAdded[0]
-    
+
     controllerClass.currentGameMode = "survival"
-    return render_template('SurvivalView.html', lives=controllerClass.survivalModeLives, score = controllerClass.currentScoreSurvival, item = questions)
+    return render_template('SurvivalView.html', lives=controllerClass.survivalModeLives, score=controllerClass.currentScoreSurvival, item=questions)
 
 
 @app.route('/survival', methods=['POST'])
@@ -73,10 +78,10 @@ def ResultMenu():
     return render_template('ResultView.html', result=controllerClass.answer, goodQuestion=controllerClass.goodQuestions)
 
 
-
 @app.route('/quiz', methods=['GET'])
 def QuizMenu():
-    controllerClass.quizModeArray = getQuestions(controllerClass.numberOfQuestionsForQuiz)
+    controllerClass.quizModeArray = getQuestions(
+        controllerClass.numberOfQuestionsForQuiz)
     controllerClass.currentGameMode = "quiz"
     return render_template('QuizView.html', questions=controllerClass.quizModeArray)
 
@@ -94,12 +99,12 @@ def PostAnswer():
                 if question:
                     answer = eval(question)[1]
                     if answer:
-                        if outcome[0] == 'True' or outcome[0] == 'False':
-                            controllerClass.currentScoreQuiz += 2  
+                        if answer[0] == 'True' or answer[0] == 'False':
+                            controllerClass.currentScoreQuiz += 2
                         else:
                             controllerClass.currentScoreQuiz += 4
                             controllerClass.correctAnswerArray.append(
-                            controllerClass.quizModeArray[i])
+                                controllerClass.quizModeArray[i])
 
                 checkbox = request.form.get('questionCheck' + str(i))
                 if checkbox == '':
@@ -114,7 +119,6 @@ def PostAnswer():
 @app.route('/endgame')
 def EndGameGet():
     return render_template('EndGameMenu.html')
-
 
 
 @app.route('/endgame', methods=['GET', 'POST'])
@@ -142,9 +146,11 @@ def EndGamePost():
 def getHighScores():
     return render_template('highscore.html', quiz=controllerClass.getQuizHighScores(), survival=controllerClass.getSurvivalHighScores())
 
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('MenuView.html'), 404
+
 
 if __name__ == '__main__':
     app.run()
