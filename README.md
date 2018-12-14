@@ -35,7 +35,7 @@ python -m pip install requests
 ```
 install bson
 ```
-py -m pip install bson
+python -m pip install bson
 ```
 
 ## Built With
