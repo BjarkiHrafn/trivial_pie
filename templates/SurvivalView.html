@@ -6,7 +6,7 @@
         <form action = "{{ url_for('ProcessSurvivalQuestion')}}" method = "post" id="questionForm">
                 
                 <div class="checkBoxContainer">
-                    <label for="goodQuestion" class="labelCheck">Good question</label>
+                    <label for="goodQuestion" class="labelCheck goodQuestionTitle">Good question</label>
                     <input type="checkbox" id="goodQuestion" class="makeVisible" name="questionCheck" value="{{item}}">
                 </div>
                 
@@ -19,12 +19,14 @@
                     Current score: {{score}}</p>
                 </div>
                 <div class="singleQuestion"><i>{{item.title}}</i></div>
-                {% for dict_item in item.options %}
+                <div class="questionContainer">
+                    {% for dict_item in item.options %}
                     <div class="custom-control custom-radio">
                         <input type="radio" class="custom-control-input" id="defaultUnchecked{{dict_item}}" name="choice" value="{{dict_item[1]}}">
-                        <label class="custom-control-label" for="defaultUnchecked{{dict_item}}">{{dict_item[0]}}</label>
+                        <label class="custom-control-label quizOption" for="defaultUnchecked{{dict_item}}">{{dict_item[0]}}</label>
                     </div>
-                {% endfor %}
+                    {% endfor %}
+                </div>
                 <input type='hidden' name='points' value='{{item.options|length}}'>
                 <button class="submitButton" type="submit" name="submitChoice">Submit!</button>
         </form>

@@ -8,14 +8,14 @@
                     {% set outerIndex = loop.index - 1 %}
                     <div class="singleQuestion questionTitle"><i>{{item.title}}</i></div>
                     <div class="checkBoxContainer">
-                        <label for="goodQuestion{{loop.index}}">Good question</label>
+                        <label class="goodQuestionTitle" for="goodQuestion{{loop.index}}">Good question</label>
                         <input type="checkbox" id="goodQuestion{{loop.index}}" class="makeVisible" name="{{outerIndex}}" value="{{item}}">
                     </div>
                     {% for dict_item in item.options %}
-                        <div class="custom-control custom-radio">
+                        <div class="custom-control custom-radio options">
                             {% set radioGuard = outerIndex|string + loop.index|string %}
                             <input type="radio" class="custom-control-input" id={{radioGuard}} name="question{{outerIndex}}" value="{{[dict_item[1], item.options|length]}}">
-                            <label class="custom-control-label" for={{radioGuard}}>{{dict_item[0]}}</label>
+                            <label class="custom-control-label quizOption" for={{radioGuard}}>{{dict_item[0]}}</label>
                         </div>
                     {% endfor %}
                 {% endfor %}
