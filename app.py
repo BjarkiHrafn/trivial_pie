@@ -87,8 +87,8 @@ def ResultMenu():
 
 @app.route('/quiz', methods=['GET'])
 def QuizMenu():
-    controllerClass.quizModeArray = controllerClass.listOFGoodQuestionsAlreadyAdded[:3]
-    #controllerClass.quizModeArray = getQuestions(controllerClass.numberOfQuestionsForQuiz)
+    #controllerClass.quizModeArray = controllerClass.listOFGoodQuestionsAlreadyAdded[:3]
+    controllerClass.quizModeArray = getQuestions(controllerClass.numberOfQuestionsForQuiz)
     totalScore = 0
     for x in controllerClass.quizModeArray:
         totalScore += len(x['options'])
