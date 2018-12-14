@@ -15,7 +15,7 @@
             {% for x in quiz %}
                 <tr>
                     <td>{{x['nickName'] }}</td>
-                    <td>{{x['score']}}</td>
+                    <td>Points: {{x['score'][0]}} Grade: {{x['score'][1]}}</td>
                 </tr>
             {% endfor %}
             </table>

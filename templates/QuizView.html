@@ -9,7 +9,7 @@
                     <div class="singleQuestion questionTitle"><i>{{item.title}}</i></div>
                     <div class="checkBoxContainer">
                         <label for="goodQuestion{{loop.index}}">Good question</label>
-                        <input type="checkbox" id="goodQuestion{{loop.index}}" class="makeVisible" name="goodness{{outerIndex}}" value={{item}}>
+                        <input type="checkbox" id="goodQuestion{{loop.index}}" class="makeVisible" name="{{outerIndex}}" value="{{item}}">
                     </div>
                     {% for dict_item in item.options %}
                         <div class="custom-control custom-radio">
@@ -19,6 +19,7 @@
                         </div>
                     {% endfor %}
                 {% endfor %}
+                <input type="hidden" name="totalScore" value="{{totalscore}}">
                 <button class="submitButton" type="submit" name="submitAns">Submit!</button>
         </form>
     </div>

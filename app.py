@@ -81,10 +81,13 @@ def ResultMenu():
 
 @app.route('/quiz', methods=['GET'])
 def QuizMenu():
-    controllerClass.quizModeArray = controllerClass.listOFGoodQuestionsAlreadyAdded[:3]
-    #controllerClass.quizModeArray = getQuestions(controllerClass.numberOfQuestionsForQuiz)
+    #controllerClass.quizModeArray = controllerClass.listOFGoodQuestionsAlreadyAdded[:3]
+    controllerClass.quizModeArray = getQuestions(controllerClass.numberOfQuestionsForQuiz)
+    totalScore = 0
+    for x in controllerClass.quizModeArray:
+        totalScore += len(x['options'])
     controllerClass.currentGameMode = "quiz"
-    return render_template('QuizView.html', questions=controllerClass.quizModeArray)
+    return render_template('QuizView.html', questions=controllerClass.quizModeArray, totalscore=totalScore)
 
 
 @app.route('/quiz', methods=['POST'])
@@ -94,29 +97,27 @@ def PostAnswer():
     # and you are redirected to another question or to the menu
     if 'submitAns' in request.form:
         wholeForm = request.form
-        print(wholeForm, file=sys.stderr)
-        print(type(wholeForm), file=sys.stderr)
-        print(len(wholeForm), file=sys.stderr)
+        totalScore = wholeForm.get('totalScore')
+        # minus two because of submitans and totalscore
+        for i in range(len(wholeForm) - 2):
+        #if a key error occurs the goodness or answer was not checked so we just ignore it
+            try:
+                #this is whether the goodness was checked
 
-        # for i in range(controllerClass.numberOfQuestionsForQuiz):
-        #     question = request.form.get(str(i))
-        #     print(question, file=sys.stderr)
-        #     if question:
-        #         answer = eval(question)[1]
-        #         if answer:
-        #             if outcome[0] == 'True' or outcome[0] == 'False':
-        #                 controllerClass.currentScoreQuiz += 2  
-        #             else:
-        #                 controllerClass.currentScoreQuiz += 4
-        #                 controllerClass.correctAnswerArray.append(
-        #                 controllerClass.quizModeArray[i])
-
-        #     checkbox = request.form.get('questionCheck' + str(i))
-        #     if checkbox == '':
-        #         controllerClass.addToGoodQuestions(
-        #             controllerClass.quizModeArray[i])
-
-        return redirect(url_for('EndGameGet'))
+                controllerClass.addToGoodQuestions(eval(wholeForm[str(i)]))
+            except KeyError:
+                pass
+            try:
+                #this is the answer the user chose
+                answer = eval(wholeForm['question' + str(i)])
+                if answer[0]:
+                    controllerClass.currentScoreQuiz += answer[1]
+            except KeyError:
+                pass
+            points = str(controllerClass.currentScoreQuiz) + '/' + str(totalScore)
+            grade = f'{eval(points) * 10:.2f}'
+        controllerClass.currentScoreQuiz = [points, grade]
+    return redirect(url_for('EndGameGet'))
 
 @app.route('/endgame')
 def EndGameGet():
@@ -125,20 +126,16 @@ def EndGameGet():
 
 @app.route('/endgame', methods=['GET', 'POST'])
 def EndGamePost():
-    if 'submitScore' in request.form:
+    if 'submitScore' in request.form :
+        #no need for nicknames longer than 20
+        nickname = request.form.get('nicknamePick')[:20] 
+        score = controllerClass.currentScoreQuiz
+        data = {"nickName": nickname, "score": score}
+        if data["nickName"].lower() in badWords.bad:
+            data["nickName"] = 'Vondurkall'
         if controllerClass.currentGameMode == "survival":
-            nickname = request.form.get('nicknamePick')
-            score = controllerClass.currentScoreSurvival
-            data = {"nickName": nickname, "score": score}
-            if data["nickName"].lower() in badWords.bad:
-                data["nickName"] = 'Vondurkall'
             controllerClass.addSurvivalHichScore(data)
         elif controllerClass.currentGameMode == "quiz":
-            nickname = request.form.get('nicknamePick')
-            score = controllerClass.currentScoreQuiz
-            data = {"nickName": nickname, "score": score}
-            if data["nickName"].lower() in badWords.bad:
-                data["nickName"] = 'Vondurkall'
             controllerClass.addQuizHighScore(data)
         controllerClass.__init__()
     return redirect(url_for('getHighScores'))
