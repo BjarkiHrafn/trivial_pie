@@ -19,6 +19,8 @@ html, body{
 
 .singleQuestion{
     margin: 10px 10px;
+    text-align: center;
+    font-size: 32px;
 }
 
 .submitButton{
@@ -63,7 +65,9 @@ button:hover{
 }
 
 #lives{
+    margin-top: 100px;
     font-size: 1.5em;
+    text-align: center;
 }
 
 .questionOption:hover{
