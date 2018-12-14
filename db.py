@@ -60,9 +60,7 @@ class Repository(object):
     def getQuizHighscore(self):
         highScoreLis = []
 
-        for document in self.quizHighScore.find().sort('score', pymongo.DESCENDING):
-            print(document)
-            
+        for document in self.quizHighScore.find().sort('score.1', pymongo.DESCENDING):
             highScoreLis.append(document)
         return highScoreLis
 
