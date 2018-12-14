@@ -19,8 +19,6 @@ https://pip.pypa.io/en/stable/installing/
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
-
 install Flask
 ```
 python -m pip install Flask
@@ -47,8 +45,8 @@ https://wikipydia.herokuapp.com/
 
 ## Known Bugs
 
-Survival mode does not work correctly
-Take quiz does not add information correctly to database
+* Survival mode does not work correctly
+* Take quiz does not add information correctly to database
 
 ## Built With
 
