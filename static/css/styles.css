@@ -19,6 +19,8 @@ html, body{
 
 .singleQuestion{
     margin: 10px 10px;
+    text-align: center;
+    font-size: 32px;
 }
 
 .submitButton{
@@ -33,6 +35,11 @@ html, body{
     -webkit-transition: all 0.5s;
     -moz-transition: all 0.5s;
     transition: all 0.5s;
+    margin-top: 100px;
+}
+
+.submitWrap{
+    text-align: center;
 }
 
 .submitButton:hover{
@@ -58,7 +65,9 @@ button:hover{
 }
 
 #lives{
+    margin-top: 100px;
     font-size: 1.5em;
+    text-align: center;
 }
 
 .questionOption:hover{
@@ -78,14 +87,14 @@ button:hover{
 
 .makeVisible {
     opacity: 100 !important;
-    pointer-events: all !important;
 }
 
 .checkBoxContainer label, checkBoxContainer input{
-    display: inline-block;
-    vertical-align: middle; 
-    margin-right: 5px;
-    font-size: 12px;
+    display: block;
+    vertical-align: middle;
+    text-align: center;
+    margin-right: 20px;
+    margin-bottom: 30px;
 }
 
 #goodQuestion{
@@ -233,7 +242,9 @@ button:hover{
 }
 
 .questionTitle{
-    font-size: 18px;
+    font-size: 24px;
+    text-align: center;
+    margin-top: 30px;
 }
 
 .quizOption{
