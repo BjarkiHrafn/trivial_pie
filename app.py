@@ -28,6 +28,11 @@ def MenuRedirect():
         return redirect(url_for('RedirectToSurvival'))
     elif 'menu' in request.form:
         return redirect(url_for('MainMenu'))
+    elif 'highScore' in request.form:
+        return redirect(url_for('getHighScores'))
+    else:
+        return redirect(url_for('page_not_found'))
+
 
 
 def getQuestions(numberOfQuestions):
@@ -45,9 +50,8 @@ def RedirectToSurvival():
 def survival():
 
     if len(controllerClass.listOFGoodQuestionsAlreadyAdded) == 0:
-        questions = getQuestions(1)
-    else:
-        questions = controllerClass.listOFGoodQuestionsAlreadyAdded[0]
+        controllerClass.listOFGoodQuestionsAlreadyAdded = getQuestions(10)
+    questions = controllerClass.listOFGoodQuestionsAlreadyAdded[0]
 
     controllerClass.currentGameMode = "survival"
     return render_template('SurvivalView.html', lives=controllerClass.survivalModeLives, score=controllerClass.currentScoreSurvival, item=questions)
@@ -121,11 +125,7 @@ def PostAnswer():
 
 @app.route('/endgame')
 def EndGameGet():
-    print("score: ", controllerClass.currentScoreQuiz, type(controllerClass.currentScoreQuiz), file=sys.stderr)
-    if controllerClass.currentGameMode == 'survival':
-        return render_template('EndGameMenu.html', score = controllerClass.currentScoreSurvival)
-    else:
-        return render_template('EndGameMenuQuiz.html', answerRate = controllerClass.currentScoreQuiz[0], grade = controllerClass.currentScoreQuiz[1])
+    return render_template('EndGameMenu.html')
 
 
 @app.route('/endgame', methods=['GET', 'POST'])
@@ -133,7 +133,11 @@ def EndGamePost():
     if 'submitScore' in request.form :
         #no need for nicknames longer than 20
         nickname = request.form.get('nicknamePick')[:20] 
-        score = controllerClass.currentScoreQuiz
+        if controllerClass.currentScoreQuiz == 0:
+            score = controllerClass.currentScoreSurvival
+        else:
+            score = controllerClass.currentScoreQuiz
+        print(score, file=sys.stderr)
         data = {"nickName": nickname, "score": score}
         if data["nickName"].lower() in badWords.bad:
             data["nickName"] = 'Vondurkall'
@@ -145,7 +149,7 @@ def EndGamePost():
     return redirect(url_for('getHighScores'))
 
 
-@app.route('/highscore')
+@app.route('/highscore', methods=['GET'])
 def getHighScores():
     return render_template('highscore.html', quiz=controllerClass.getQuizHighScores(), survival=controllerClass.getSurvivalHighScores())
 
