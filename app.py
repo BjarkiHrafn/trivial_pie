@@ -128,7 +128,11 @@ def EndGamePost():
     if 'submitScore' in request.form :
         #no need for nicknames longer than 20
         nickname = request.form.get('nicknamePick')[:20] 
-        score = controllerClass.currentScoreQuiz
+        if controllerClass.currentScoreQuiz == 0:
+            score = controllerClass.currentScoreSurvival
+        else:
+            score = controllerClass.currentScoreQuiz
+        print(score, file=sys.stderr)
         data = {"nickName": nickname, "score": score}
         if data["nickName"].lower() in badWords.bad:
             data["nickName"] = 'Vondurkall'
