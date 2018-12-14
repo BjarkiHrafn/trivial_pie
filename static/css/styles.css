@@ -78,12 +78,14 @@ button:hover{
 
 .makeVisible {
     opacity: 100 !important;
+    pointer-events: all !important;
 }
 
 .checkBoxContainer label, checkBoxContainer input{
     display: inline-block;
     vertical-align: middle; 
     margin-right: 5px;
+    font-size: 12px;
 }
 
 #goodQuestion{
