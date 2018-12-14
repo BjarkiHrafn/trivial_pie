@@ -41,6 +41,15 @@ python -m pip install bson
 
 py app.py
 
+### Heroku
+
+https://wikipydia.herokuapp.com/
+
+## Known Bugs
+
+Survival mode does not work correctly
+Take quiz does not add information correctly to database
+
 ## Built With
 
 * [mlab](https://mlab.com/) - Database-as-a-Service for MongoDB
