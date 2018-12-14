@@ -62,9 +62,9 @@ def ProcessSurvivalQuestion():
         if addToGood:
             controllerClass.addToGoodQuestions(eval(addToGood))
         answer = wholeForm.get('choice')
+        print(answer, file=sys.stderr)
         if answer and eval(answer):
             score = wholeForm.get('points')
-            print(score, file=sys.stderr)
             controllerClass.currentScoreSurvival += int(score)
         else:
             controllerClass.survivalModeLives -= 1
@@ -120,11 +120,7 @@ def PostAnswer():
 
 @app.route('/endgame')
 def EndGameGet():
-    print("score: ", controllerClass.currentScoreQuiz, type(controllerClass.currentScoreQuiz), file=sys.stderr)
-    if controllerClass.currentGameMode == 'survival':
-        return render_template('EndGameMenu.html', score = controllerClass.currentScoreSurvival)
-    else:
-        return render_template('EndGameMenuQuiz.html', answerRate = controllerClass.currentScoreQuiz[0], grade = controllerClass.currentScoreQuiz[1])
+    return render_template('EndGameMenu.html')
 
 
 @app.route('/endgame', methods=['GET', 'POST'])
@@ -133,7 +129,6 @@ def EndGamePost():
         #no need for nicknames longer than 20
         nickname = request.form.get('nicknamePick')[:20] 
         score = controllerClass.currentScoreQuiz
-        print(score, file=sys.stderr)
         data = {"nickName": nickname, "score": score}
         if data["nickName"].lower() in badWords.bad:
             data["nickName"] = 'Vondurkall'
