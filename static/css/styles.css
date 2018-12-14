@@ -1,24 +1,12 @@
-body{
-    margin: 0;
-    padding: 0;
-    height: 100%;
+html, body{
     width: 100%;
-}
-
-.container{
-    width: 50%;
-    height: auto;
+    height: 100%;
+    font-size: 12px;
 }
 
 .questionContainer{
-    position: fixed;
-    top: 50%;
-    left:50%;
-    -webkit-transform: translate(-50%,-50%);
-    max-height: 100%;
-    overflow-y: auto;
-    display: block;
-
+    justify-content: center;
+    align-content: center;
 }
 
 .questionForm{
@@ -29,33 +17,14 @@ body{
     align-items: center;
 }
 
-#questionBtn{
-    background: transparent;
-    border: none !important;
-    font-size: 2em;
-    text-decoration: none;
-    display: inline-block;
-    margin-bottom: 10px;
-    font-family: 'Dosis', sans-serif;
-    
-}
-
-#questionBtn:hover{
-    background-color: darkgray;
-}
-
-#questionBtn:checked{
-    background-color: #4CAF50;
-}
-
 .singleQuestion{
     margin: 10px 10px;
 }
 
-#submitButton{
+.submitButton{
     border-radius: 6px;
     font-size: 16px;
-    width: 25%;
+    width: 250px;
     height: 50px;
     border: 2px #ffffff solid;
     background-color: #4CAF50;
@@ -66,10 +35,8 @@ body{
     transition: all 0.5s;
 }
 
-#submitButton:hover{
+.submitButton:hover{
     background-color: #3F9443;
-    border-width: 20px;
-    height: auto;
 }
 
 button:hover{
@@ -78,12 +45,12 @@ button:hover{
 
 .questionOption{
     width: calc(100%);
-  background-image: linear-gradient(transparent calc(100% - 5px), black 3px);
-  background-repeat: no-repeat;
-  background-size: 0% 100%;
-  transition: background-size 1s;
-  text-align: center;
-  margin: auto;
+    background-image: linear-gradient(transparent calc(100% - 5px), black 3px);
+    background-repeat: no-repeat;
+    background-size: 0% 100%;
+    transition: background-size 1s;
+    text-align: center;
+    margin: auto;
 }
 
 .heart{
@@ -93,9 +60,11 @@ button:hover{
 #lives{
     font-size: 1.5em;
 }
+
 .questionOption:hover{
     background-size: 100% 100%;
 }
+
 #loading{
     height: 40%;
     width: 50%;
@@ -116,29 +85,78 @@ button:hover{
     vertical-align: middle; 
     margin-right: 5px;
 }
+
 #goodQuestion{
     pointer-events: all;
 }
 
-.gameModeButton {  
-    font-size: 24px;
+.headerButton {  
+    font-size: 20px;
     height: 100%;
+    width: 150px;
+    background-color: #06a77d;
+    color:white;
+    border-radius: 6px;
+    border: 2px #ffffff solid;
+    text-align: center;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    transition: all 0.5s;
 }
 
-#quizGameMode {
-    background-color: #3F9443
+.headerButton:hover{
+    background-color: #02926c;
 }
 
+.headerButton:after{
+    background-color: #02926c;
+}
+
+
+#AllContent{
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
 #header {
     display: flex;
-    flex: 1;
     flex-direction: row;
     justify-content: space-between;
-    padding: 25px;
     text-align: center;
     background: #00A5CF;
     color: white;
     font-size: 30px;
+    flex-shrink: 0;
+}
+#content{
+    flex-grow: 12;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 30px;
+    flex-shrink: 0;
+}
+
+.contentMiddle{
+    flex: 2;
+}
+
+.contentSide{
+    flex: 1;
+}
+
+#footer {
+    height: 20%;
+    display: flex;
+    text-align: center; 
+    background-color: #004788;
+    flex-shrink: 0;
+}
+
+#container{
+    flex: 1;
 }
 
 #headerLogo{
@@ -154,17 +172,6 @@ button:hover{
     flex: 1;
     justify-content: flex-end;
     align-items: center;
-}
-
-#footer {
-    height: 100px;
-    padding: 25px;
-    position: absolute;
-    text-align: center;
-    bottom: 0px;  
-    background-color: #004788;
-    display: block;
-    width: 100%;
 }
 
 .logoContainer{
@@ -192,4 +199,48 @@ button:hover{
 }
 #load{
       display: none;
+}
+
+#scoreBoardConatiner{
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    font-size: 12px;
+}
+
+#quiz{
+    flex-direction: column;
+    display: flex;
+    width: 50%;
+    align-content: center;
+    padding: 5px;
+}
+
+#survival{
+    flex-direction: column;
+    display: flex;
+    width: 50%;
+    align-content: center;
+    padding: 5px;
+}
+
+.subTitle{
+    text-align: center;
+}
+
+.questionTitle{
+    font-size: 16px;
+}
+
+.quizOption{
+    font-size: 12px;
+}
+
+.goodQuestion{
+    font-size: 14px
+}
+
+#test{
+    color:red;
 }

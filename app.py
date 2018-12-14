@@ -1,21 +1,24 @@
 from flask import Flask, render_template, request, url_for, redirect
 from ControllerClass import Controller
-import sys # prints to console
+import sys  # prints to console
 import badWords
 
 app = Flask(__name__)
 app.debug = True
 controllerClass = Controller()
 
+
 @app.route('/', methods=['GET'])
 def MasterMenu():
     # return render_template('MasterView.html', msg="some messaage")
     return render_template('MenuView.html')
 
+
 @app.route('/menu', methods=['GET'])
 # questions, create question etc...
 def MainMenu():
     return render_template('MenuView.html')
+
 
 @app.route('/menu', methods=['POST'])
 def MenuRedirect():
@@ -30,22 +33,24 @@ def MenuRedirect():
 def getQuestions(numberOfQuestions):
     return controllerClass.DeployQuestion(numberOfQuestions)
 
+
 @app.route('/newgame')
 def RedirectToSurvival():
     controllerClass.__init__()
     return redirect(url_for('survival'))
 
+
 @app.route('/survival')
 # Post the questions here
 def survival():
-    
+
     if len(controllerClass.listOFGoodQuestionsAlreadyAdded) == 0:
         questions = getQuestions(1)
     else:
         questions = controllerClass.listOFGoodQuestionsAlreadyAdded[0]
-    
+
     controllerClass.currentGameMode = "survival"
-    return render_template('SurvivalView.html', lives=controllerClass.survivalModeLives, score = controllerClass.currentScoreSurvival, item = questions)
+    return render_template('SurvivalView.html', lives=controllerClass.survivalModeLives, score=controllerClass.currentScoreSurvival, item=questions)
 
 
 @app.route('/survival', methods=['POST'])
@@ -72,7 +77,6 @@ def ProcessSurvivalQuestion():
 @app.route('/results')
 def ResultMenu():
     return render_template('ResultView.html', result=controllerClass.answer, goodQuestion=controllerClass.goodQuestions)
-
 
 
 @app.route('/quiz', methods=['GET'])
@@ -119,7 +123,6 @@ def EndGameGet():
     return render_template('EndGameMenu.html')
 
 
-
 @app.route('/endgame', methods=['GET', 'POST'])
 def EndGamePost():
     if 'submitScore' in request.form:
@@ -145,9 +148,11 @@ def EndGamePost():
 def getHighScores():
     return render_template('highscore.html', quiz=controllerClass.getQuizHighScores(), survival=controllerClass.getSurvivalHighScores())
 
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('MenuView.html'), 404
+
 
 if __name__ == '__main__':
     app.run()
