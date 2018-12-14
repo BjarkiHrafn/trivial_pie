@@ -5,7 +5,6 @@ import badWords
 
 app = Flask(__name__)
 app.debug = True
-Bootstrap(app)
 controllerClass = Controller()
 
 
