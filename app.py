@@ -45,9 +45,8 @@ def RedirectToSurvival():
 def survival():
 
     if len(controllerClass.listOFGoodQuestionsAlreadyAdded) == 0:
-        questions = getQuestions(1)
-    else:
-        questions = controllerClass.listOFGoodQuestionsAlreadyAdded[0]
+        controllerClass.listOFGoodQuestionsAlreadyAdded = getQuestions(10)
+    questions = controllerClass.listOFGoodQuestionsAlreadyAdded[0]
 
     controllerClass.currentGameMode = "survival"
     return render_template('SurvivalView.html', lives=controllerClass.survivalModeLives, score=controllerClass.currentScoreSurvival, item=questions)
@@ -63,9 +62,9 @@ def ProcessSurvivalQuestion():
         if addToGood:
             controllerClass.addToGoodQuestions(eval(addToGood))
         answer = wholeForm.get('choice')
-        print(answer, file=sys.stderr)
         if answer and eval(answer):
             score = wholeForm.get('points')
+            print(score, file=sys.stderr)
             controllerClass.currentScoreSurvival += int(score)
         else:
             controllerClass.survivalModeLives -= 1
@@ -130,6 +129,7 @@ def EndGamePost():
         #no need for nicknames longer than 20
         nickname = request.form.get('nicknamePick')[:20] 
         score = controllerClass.currentScoreQuiz
+        print(score, file=sys.stderr)
         data = {"nickName": nickname, "score": score}
         if data["nickName"].lower() in badWords.bad:
             data["nickName"] = 'Vondurkall'
