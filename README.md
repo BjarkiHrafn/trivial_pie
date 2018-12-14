@@ -37,6 +37,13 @@ install bson
 ```
 python -m pip install bson
 ```
+### Run in localhost
+
+py app.py
+
+### Heroku
+
+https://wikipydia.herokuapp.com/?fbclid=IwAR2XcsD5PZ4rfVzW-1rSs6iVF-fAEeQ-c-GDOzhVIolVSdZaD2vQOehG61o
 
 ## Built With
 
