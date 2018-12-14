@@ -69,6 +69,3 @@ class Repository(object):
     def addQuizHighScore(self, data):
         self.quizHighScore.insert_one(data)
         return data
-
-r = Repository()
-print(r.getQuizHighscore())
