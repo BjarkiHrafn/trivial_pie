@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, url_for, redirect
 from ControllerClass import Controller
 import sys  # prints to console
-from flask_bootstrap import Bootstrap
 import badWords
 
 app = Flask(__name__)
@@ -102,6 +101,7 @@ def PostAnswer():
     # When you answer the controllerClass.answer gets the value
     # and you are redirected to another question or to the menu
     if 'submitAns' in request.form:
+        controllerClass.currentScoreQuiz = 0
         wholeForm = request.form
         totalScore = wholeForm.get('totalScore')
         # minus two because of submitans and totalscore
@@ -117,17 +117,30 @@ def PostAnswer():
                 #this is the answer the user chose
                 answer = eval(wholeForm['question' + str(i)])
                 if answer[0]:
+                    print(type(answer[1]), file=sys.stderr)
+                    print(type(controllerClass.currentScoreQuiz), file=sys.stderr)
                     controllerClass.currentScoreQuiz += answer[1]
             except KeyError:
-                pass
-            points = str(controllerClass.currentScoreQuiz) + '/' + str(totalScore)
-            grade = f'{eval(points) * 10:.2f}'
+                continue
+        
+        points = str(controllerClass.currentScoreQuiz) + '/' + totalScore
+        grade = f'{eval(points) * 10:.2f}'
         controllerClass.currentScoreQuiz = [points, eval(grade)]
+
     return redirect(url_for('EndGameGet'))
 
 @app.route('/endgame')
 def EndGameGet():
-    return render_template('EndGameMenu.html')
+    points = 0
+
+    if type(controllerClass.currentScoreQuiz) is list:
+        points = controllerClass.currentScoreQuiz[0]
+        points += '  Your grade is: ' + str(controllerClass.currentScoreQuiz[1])
+    elif controllerClass.currentScoreSurvival != 0:
+        points = controllerClass.currentScoreSurvival
+
+
+    return render_template('EndGameMenu.html', score=points)
 
 
 @app.route('/endgame', methods=['GET', 'POST'])
