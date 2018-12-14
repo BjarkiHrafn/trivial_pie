@@ -3,23 +3,23 @@
 {% block body %}
 
     <div class="questionContainer">
-        <form action = "{{ url_for('PostAnswer')}}" method = "post" id="questionForm">
+        <form action="{{ url_for('PostAnswer')}}" method="post" id="questionForm">
                 {% for item in questions %}
                     {% set outerIndex = loop.index - 1 %}
                     <div class="singleQuestion"><i>{{item.title}}</i></div>
                     <div class="checkBoxContainer">
                         <label for="goodQuestion{{loop.index}}">Good question</label>
-                        <input type="checkbox" id="goodQuestion{{loop.index}}" class="makeVisible" name="questionCheck{{outerIndex}}" value={{questionAndOptions}}>
+                        <input type="checkbox" id="goodQuestion{{loop.index}}" class="makeVisible" name="goodness{{outerIndex}}" value={{item}}>
                     </div>
                     {% for dict_item in item.options %}
                         <div class="custom-control custom-radio">
                             {% set radioGuard = outerIndex|string + loop.index|string %}
-                            <input type="radio" class="custom-control-input" id={{radioGuard}} name={{outerIndex}} value="{{dict_item}}">
+                            <input type="radio" class="custom-control-input" id={{radioGuard}} name="question{{outerIndex}}" value="{{[dict_item[1], item.options|length]}}">
                             <label class="custom-control-label" for={{radioGuard}}>{{dict_item[0]}}</label>
                         </div>
                     {% endfor %}
                 {% endfor %}
-                <button type="submit" name="submitAns" value={{questions}}>Submit!</button>
+                <button type="submit" name="submitAns">Submit!</button>
         </form>
     </div>
     

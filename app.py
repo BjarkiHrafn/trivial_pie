@@ -58,7 +58,8 @@ def ProcessSurvivalQuestion():
         if addToGood:
             controllerClass.addToGoodQuestions(eval(addToGood))
         answer = wholeForm.get('choice')
-        if answer and eval(answer)[1]:
+        print(answer, file=sys.stderr)
+        if answer and eval(answer):
             score = wholeForm.get('points')
             controllerClass.currentScoreSurvival += int(score)
         else:
@@ -76,7 +77,8 @@ def ResultMenu():
 
 @app.route('/quiz', methods=['GET'])
 def QuizMenu():
-    controllerClass.quizModeArray = getQuestions(controllerClass.numberOfQuestionsForQuiz)
+    controllerClass.quizModeArray = controllerClass.listOFGoodQuestionsAlreadyAdded[:3]
+    #controllerClass.quizModeArray = getQuestions(controllerClass.numberOfQuestionsForQuiz)
     controllerClass.currentGameMode = "quiz"
     return render_template('QuizView.html', questions=controllerClass.quizModeArray)
 
@@ -84,32 +86,33 @@ def QuizMenu():
 @app.route('/quiz', methods=['POST'])
 # Here you get what the player chose
 def PostAnswer():
-    try:
-        # When you answer the controllerClass.answer gets the value
-        # and you are redirected to another question or to the menu
-        if 'submitAns' in request.form:
+    # When you answer the controllerClass.answer gets the value
+    # and you are redirected to another question or to the menu
+    if 'submitAns' in request.form:
+        wholeForm = request.form
+        print(wholeForm, file=sys.stderr)
+        print(type(wholeForm), file=sys.stderr)
+        print(len(wholeForm), file=sys.stderr)
 
-            for i in range(controllerClass.numberOfQuestionsForQuiz):
-                question = request.form.get(str(i))
-                if question:
-                    answer = eval(question)[1]
-                    if answer:
-                        if outcome[0] == 'True' or outcome[0] == 'False':
-                            controllerClass.currentScoreQuiz += 2  
-                        else:
-                            controllerClass.currentScoreQuiz += 4
-                            controllerClass.correctAnswerArray.append(
-                            controllerClass.quizModeArray[i])
+        # for i in range(controllerClass.numberOfQuestionsForQuiz):
+        #     question = request.form.get(str(i))
+        #     print(question, file=sys.stderr)
+        #     if question:
+        #         answer = eval(question)[1]
+        #         if answer:
+        #             if outcome[0] == 'True' or outcome[0] == 'False':
+        #                 controllerClass.currentScoreQuiz += 2  
+        #             else:
+        #                 controllerClass.currentScoreQuiz += 4
+        #                 controllerClass.correctAnswerArray.append(
+        #                 controllerClass.quizModeArray[i])
 
-                checkbox = request.form.get('questionCheck' + str(i))
-                if checkbox == '':
-                    controllerClass.addToGoodQuestions(
-                        controllerClass.quizModeArray[i])
+        #     checkbox = request.form.get('questionCheck' + str(i))
+        #     if checkbox == '':
+        #         controllerClass.addToGoodQuestions(
+        #             controllerClass.quizModeArray[i])
 
-            return redirect(url_for('EndGameGet'))
-    except:
-        return "Something went wrong.."
-
+        return redirect(url_for('EndGameGet'))
 
 @app.route('/endgame')
 def EndGameGet():

@@ -21,7 +21,7 @@
                 <div class="singleQuestion"><i>{{item.title}}</i></div>
                 {% for dict_item in item.options %}
                     <div class="custom-control custom-radio">
-                        <input type="radio" class="custom-control-input" id="defaultUnchecked{{dict_item}}" name="choice" value="{{dict_item}}">
+                        <input type="radio" class="custom-control-input" id="defaultUnchecked{{dict_item}}" name="choice" value="{{dict_item[1]}}">
                         <label class="custom-control-label" for="defaultUnchecked{{dict_item}}">{{dict_item[0]}}</label>
                     </div>
                 {% endfor %}
