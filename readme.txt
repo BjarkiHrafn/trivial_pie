@@ -11,7 +11,6 @@ Getting Started
               https://pip.pypa.io/en/stable/installing/
         
     - Installing
-          A step by step series of examples that tell you how to get a development env running
           - install Flask
             python -m pip install Flask
           - install pymongo
@@ -25,6 +24,9 @@ Getting Started
 
 Run in localhost
        py app.py
+
+Heroku
+       https://wikipydia.herokuapp.com/
 
 Known Bugs
        Survival mode does not work correctly
