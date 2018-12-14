@@ -1,0 +1,31 @@
+{% extends 'masterView.html' %}
+{% block body %}
+
+    <div class="questionContainer disappear">
+        <form action="{{ url_for('postAnswer')}}" method="post" id="questionForm">
+                {% for item in questions %}
+                    {% set outerIndex = loop.index - 1 %}
+                    <div class="singleQuestion questionTitle"><i>{{item.title}}</i></div>
+                    <div class="checkBoxContainer">
+                        <label class="goodQuestionTitle" for="goodQuestion{{loop.index}}">Good question
+                        <input type="checkbox" id="goodQuestion{{loop.index}}" class="makeVisible" name="{{outerIndex}}" value="{{item}}">
+                    </label>
+                    </div>
+                    {% for dict_item in item.options %}
+                        <div class="custom-control custom-radio">
+                            {% set radioGuard = outerIndex|string + loop.index|string %}
+                            <input type="radio" class="custom-control-input" id={{radioGuard}} name="question{{outerIndex}}" value="{{[dict_item[1], item.options|length]}}">
+                            <label class="custom-control-label quizOption" for={{radioGuard}}>{{dict_item[0]}}</label>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+                <input type="hidden" name="totalScore" value="{{totalscore}}">
+                <div class =  "submitWrap"> 
+                <button class="submitButton" type="submit" name="submitAns">Submit!</button>
+                </div>
+        </form>
+    </div>
+
+          
+    
+{% endblock %}

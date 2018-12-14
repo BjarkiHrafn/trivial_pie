@@ -1,0 +1,39 @@
+{% extends 'masterView.html' %}
+
+{% block body %}
+
+    <div class="questionContainer disappear">
+        <form action = "{{ url_for('processSurvivalQuestion')}}" method = "post" id="questionForm">
+                
+               
+                
+                <div id = "survivalStats">
+                    <p id="lives">Lives:
+                    {% for i in range(lives)%}    
+                    <span class="glyphicon glyphicon-heart heart"></span>
+                    {% endfor %}
+                    <br/>
+                    Current score: {{score}}</p>
+                </div>
+                <div class="singleQuestion"><i>{{item.title}}</i></div>
+                <div class="checkBoxContainer">
+                        <label for="goodQuestion" class="labelCheck goodQuestionTitle">Good question
+                        <input type="checkbox" id="goodQuestion" class="makeVisible" name="questionCheck" value="{{item}}">
+                        </label>
+                    </div>
+                <div class="questionContainer">
+                    {% for dict_item in item.options %}
+                    <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" id="defaultUnchecked{{dict_item}}" name="choice" value="{{dict_item[1]}}">
+                        <label class="custom-control-label quizOption" for="defaultUnchecked{{dict_item}}">{{dict_item[0]}}</label>
+                    </div>
+                    {% endfor %}
+                </div>
+                <input type='hidden' name='points' value='{{item.options|length}}'>
+                <div class =  "submitWrap"> 
+                    <button class="submitButton" type="submit" name="submitChoice">Submit!</button>
+                </div>
+        </form>
+    </div>
+    
+{% endblock %}

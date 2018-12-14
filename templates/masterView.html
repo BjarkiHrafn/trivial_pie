@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+        <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>WikiPydia</title>
+    </head>
+    <body>
+        
+        <div id="AllContent">
+            <div id="header" >
+                <div id="headerLogo">
+                    <form action = "{{ url_for('menuRedirect')}}" method = "post" id="mainManuForm">
+                        <div class="logoContainer">
+                            <img src="{{ url_for('static', filename = 'logo.png',)}}" class = "logo"></img>
+                            <button type="submit" name="menu" class="logoButton"></button>
+                        </div>
+                    </form>
+                </div>
+                <div id="headerTItle">
+                    <h1 class="title">WikiPydia</h1>
+                </div>
+                <div id="headerGameModes">
+                    <form action = "{{ url_for('menuRedirect')}}" method = "post" class="questionForm">
+                        <div>
+                            <button type="submit" name="highScore" class="headerButton">High score</button>
+                            <button type="submit" name="quiz" class="headerButton gameModes">Take a quiz</button>
+                            <button type="submit" name="survival" class="headerButton gameModes">Survival mode</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+    
+            <div id="content">  
+                <div class="contentSide"></div>
+                <div class="contentMiddle"> 
+                    <div id="container">
+                        
+
+                        {% block body %} 
+                        
+                        {% endblock %} 
+                    </div>
+                    {% raw %}
+
+                    <div id="load" class='center'>
+                        <h1>Scraping Wikipedia for questions</h1>
+                        <img id="loading" src="/static/loading.gif"></img>
+                    </div>
+                    
+                    {% endraw %}
+                    <script>
+                        var form = document.getElementsByClassName("gameModes")
+                        for(var i = 0; i < form.length; i++){
+                            form[i].onclick = function() {document.getElementById("load").setAttribute("style", "display: block");
+                            item = document.getElementsByClassName("disappear")
+                            for(var j = 0; j < form.length; j++){
+                                item[j].setAttribute("style", "display: none");}
+                        }}
+                    </script>
+                </div>
+                <div class="contentSide"></div>
+            </div>
+            <div id="footer">
+                <a href="https://en.wikipedia.org/wiki/Wikipedia:Random">About Wikipedia:Random</a>
+            </div>
+        </div>
+    </body>
+</html>

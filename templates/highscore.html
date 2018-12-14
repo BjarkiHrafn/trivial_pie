@@ -1,0 +1,41 @@
+{% extends 'masterView.html' %}
+
+{% block body %}
+
+<div class="disappear">
+    <h2 class="subTitle">Score Board</h2>
+    <div id="scoreBoardConatiner">
+        <div id="quiz">
+            <h2>Quiz</h2>
+            <table>
+                <tr>
+                    <th>Nickname</th>
+                    <th>Score</th>
+                </tr>
+            {% for x in quiz %}
+                <tr>
+                    <td>{{x['nickName'] }}</td>
+                    <td>Points: {{x['score'][0]}} Grade: {{x['score'][1]}}</td>
+                </tr>
+            {% endfor %}
+            </table>
+        </div>
+        <div id="survival">
+            <h2>Survival</h2>
+            <table>
+                <tr>
+                    <th>Nickname</th>
+                    <th>Score</th>
+                </tr>
+            {% for x in survival %}
+                <tr>
+                    <td>{{x['nickName'] }}</td>
+                    <td>{{x['score']}}</td>
+                </tr>
+            {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
