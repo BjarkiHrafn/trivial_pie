@@ -29,8 +29,6 @@ def MenuRedirect():
         return redirect(url_for('QuestionMenu'))
     elif 'menu' in request.form:
         return redirect(url_for('MainMenu'))
-    elif 'highScore' in request.form:
-        return redirect(url_for('GetHighScores'))
 
 
 def getQuestions(numberOfQuestions):
@@ -97,7 +95,7 @@ def PostAnswer():
                 if question:
                     answer = eval(question)[1]
                     if answer:
-                        if outcome[0] == 'True' or outcome[0] == 'False':
+                        if answer[0] == 'True' or answer[0] == 'False':
                             controllerClass.currentScoreQuiz += 2
                         else:
                             controllerClass.currentScoreQuiz += 4
@@ -146,7 +144,7 @@ def EndGamePost():
 
 
 @app.route('/highscore')
-def GetHighScores():
+def getHighScores():
     return render_template('highscore.html', quiz=controllerClass.getQuizHighScores(), survival=controllerClass.getSurvivalHighScores())
 
 

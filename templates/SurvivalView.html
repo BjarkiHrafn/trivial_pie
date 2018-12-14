@@ -2,7 +2,7 @@
 
 {% block body %}
 
-    <div class="questionContainer">
+    <div class="questionContainer disappear">
         <form action = "{{ url_for('ProcessSurvivalQuestion')}}" method = "post" id="questionForm">
                 
                 <div class="checkBoxContainer">
@@ -20,16 +20,16 @@
                 </div>
                 
             
-                    <div class="singleQuestion"><i>{{item.title}}</i></div>
+                    <div class="singleQuestion questionTitle"><i>{{item.title}}</i></div>
                     {% for dict_item in item.options %}
                         <div class="custom-control custom-radio">
                             <input type="radio" class="custom-control-input" id="defaultUnchecked{{dict_item}}" name="ans" value="{{dict_item}}">
-                            <label class="custom-control-label" for="defaultUnchecked{{dict_item}}">{{dict_item[0]}}</label>
+                            <label class="custom-control-label quizOption" for="defaultUnchecked{{dict_item}}">{{dict_item[0]}}</label>
                         </div>
                     {% endfor %}
         
                 
-                <button type="submit" name="submitAns" value={{msg}} id="submitButton">Submit!</button>
+                <button class="submitButton" type="submit" name="submitAns" value={{msg}}>Submit!</button>
         </form>
     </div>
     

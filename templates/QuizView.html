@@ -6,20 +6,20 @@
         <form action = "{{ url_for('PostAnswer')}}" method = "post" id="questionForm">
                 {% for item in questions %}
                     {% set outerIndex = loop.index - 1 %}
-                    <div class="singleQuestion"><i>{{item.title}}</i></div>
+                    <div class="singleQuestion questionTitle"><i>{{item.title}}</i></div>
                     <div class="checkBoxContainer">
-                        <label for="goodQuestion{{loop.index}}">Good question</label>
+                        <label class="goodQuestion" for="goodQuestion{{loop.index}}">Good question</label>
                         <input type="checkbox" id="goodQuestion{{loop.index}}" class="makeVisible" name="questionCheck{{outerIndex}}" value={{questionAndOptions}}>
                     </div>
                     {% for dict_item in item.options %}
                         <div class="custom-control custom-radio">
                             {% set radioGuard = outerIndex|string + loop.index|string %}
                             <input type="radio" class="custom-control-input" id={{radioGuard}} name={{outerIndex}} value="{{dict_item}}">
-                            <label class="custom-control-label" for={{radioGuard}}>{{dict_item[0]}}</label>
+                            <label class="custom-control-label quizOption" for={{radioGuard}}>{{dict_item[0]}}</label>
                         </div>
                     {% endfor %}
                 {% endfor %}
-                <button type="submit" name="submitAns" value={{questions}}>Submit!</button>
+                <button class="submitButton" type="submit" name="submitAns" value={{questions}} >Submit!</button>
         </form>
     </div>
     
