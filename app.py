@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, url_for, redirect
+import wtforms
 from ControllerClass import Controller
 import sys # prints to console
 import badWords
@@ -50,9 +51,12 @@ def QuestionMenu():
 def ProcessSurvivalQuestion():
     if 'submitAns'in request.form:
         outcome = eval(request.form.get("ans"))
+        #outcome2 = wtforms.SubmitField()
         checkbox = request.form.get('questionCheck')
+        print("outcome: ", outcome, outcome2, file = sys.stderr)
         if checkbox:
-            controllerClass.goodQuestions.append(outcome[0])
+            controllerClass.addToGoodQuestions(outcome)
+            #controllerClass.goodQuestions.append(outcome[0])
         if not outcome[1]:
             controllerClass.survivalModeLives -= 1
             if controllerClass.survivalModeLives == 0:
@@ -126,8 +130,6 @@ def EndGamePost():
             if data["nickName"].lower() in badWords.bad:
                 data["nickName"] = 'Vondurkall'
             controllerClass.addSurvivalHichScore(data)
-            controllerClass.survivalModeArray = []
-            controllerClass.currentScoreSurvival = 0
         elif controllerClass.currentGameMode == "quiz":
             nickname = request.form.get('nicknamePick')
             score = controllerClass.currentScoreQuiz
@@ -135,8 +137,7 @@ def EndGamePost():
             if data["nickName"].lower() in badWords.bad:
                 data["nickName"] = 'Vondurkall'
             controllerClass.addQuizHighScore(data)
-            controllerClass.correctAnswerArray = []
-            controllerClass.currentScoreQuiz = 0
+        controllerClass = Controller()
     return redirect(url_for('getHighScores'))
 
 
