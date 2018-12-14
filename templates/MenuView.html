@@ -1,8 +1,8 @@
-{% extends 'MasterView.html' %}
+{% extends 'masterView.html' %}
 
 {% block body %}
     
-    <form action = "{{ url_for('MenuRedirect')}}" method = "post" class="questionForm disappear gameModes">
+    <form action = "{{ url_for('menuRedirect')}}" method = "post" class="questionForm disappear gameModes">
         <div>
             <button type="submit" name="quiz" class="headerButton">Take a quiz</button>
             <button class="headerButton" type="submit" name="survival">Survival mode</button>

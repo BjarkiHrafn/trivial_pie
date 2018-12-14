@@ -19,7 +19,7 @@
         <div id="AllContent">
             <div id="header" >
                 <div id="headerLogo">
-                    <form action = "{{ url_for('MenuRedirect')}}" method = "post" id="mainManuForm">
+                    <form action = "{{ url_for('menuRedirect')}}" method = "post" id="mainManuForm">
                         <div class="logoContainer">
                             <img src="{{ url_for('static', filename = 'logo.png',)}}" class = "logo"></img>
                             <button type="submit" name="menu" class="logoButton"></button>
@@ -30,7 +30,7 @@
                     <h1 class="title">WikiPydia</h1>
                 </div>
                 <div id="headerGameModes">
-                    <form action = "{{ url_for('MenuRedirect')}}" method = "post" class="questionForm">
+                    <form action = "{{ url_for('menuRedirect')}}" method = "post" class="questionForm">
                         <div>
                             <button type="submit" name="highScore" class="headerButton">High score</button>
                             <button type="submit" name="quiz" class="headerButton gameModes">Take a quiz</button>

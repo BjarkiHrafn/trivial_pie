@@ -17,12 +17,12 @@ class Controller(object):
         self.quizModeArray = []
         self.correctAnswerArray = []
         self.currentGameMode = ""
-        self.numberOfQuestionsForQuiz = 5
+        self.numberOfQuestionsForQuiz = 10
         self.currentScoreSurvival = 0
         self.currentScoreQuiz = 0
         self.listOFGoodQuestionsAlreadyAdded = self.deployGoodQuestion()
 
-    def DeployQuestion(self, numbOfQuest):
+    def deployQuestion(self, numbOfQuest):
 
         questions = []
         getLock = Lock()

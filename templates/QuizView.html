@@ -1,8 +1,8 @@
-{% extends 'MasterView.html' %}
+{% extends 'masterView.html' %}
 {% block body %}
 
     <div class="questionContainer disappear">
-        <form action="{{ url_for('PostAnswer')}}" method="post" id="questionForm">
+        <form action="{{ url_for('postAnswer')}}" method="post" id="questionForm">
                 {% for item in questions %}
                     {% set outerIndex = loop.index - 1 %}
                     <div class="singleQuestion questionTitle"><i>{{item.title}}</i></div>

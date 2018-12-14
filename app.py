@@ -9,25 +9,25 @@ controllerClass = Controller()
 
 
 @app.route('/', methods=['GET'])
-def MasterMenu():
+def masterMenu():
     # return render_template('MasterView.html', msg="some messaage")
-    return render_template('MenuView.html')
+    return render_template('menuView.html')
 
 
 @app.route('/menu', methods=['GET'])
 # questions, create question etc...
-def MainMenu():
-    return render_template('MenuView.html')
+def mainMenu():
+    return render_template('menuView.html')
 
 
 @app.route('/menu', methods=['POST'])
-def MenuRedirect():
+def menuRedirect():
     if 'quiz' in request.form:
-        return redirect(url_for('QuizMenu'))
+        return redirect(url_for('quizMenu'))
     elif 'survival' in request.form:
-        return redirect(url_for('RedirectToSurvival'))
+        return redirect(url_for('redirectToSurvival'))
     elif 'menu' in request.form:
-        return redirect(url_for('MainMenu'))
+        return redirect(url_for('mainMenu'))
     elif 'highScore' in request.form:
         return redirect(url_for('getHighScores'))
     else:
@@ -36,11 +36,11 @@ def MenuRedirect():
 
 
 def getQuestions(numberOfQuestions):
-    return controllerClass.DeployQuestion(numberOfQuestions)
+    return controllerClass.deployQuestion(numberOfQuestions)
 
 
 @app.route('/newgame')
-def RedirectToSurvival():
+def redirectToSurvival():
     controllerClass.__init__()
     return redirect(url_for('survival'))
 
@@ -54,11 +54,11 @@ def survival():
     questions = controllerClass.listOFGoodQuestionsAlreadyAdded[0]
 
     controllerClass.currentGameMode = "survival"
-    return render_template('SurvivalView.html', lives=controllerClass.survivalModeLives, score=controllerClass.currentScoreSurvival, item=questions)
+    return render_template('survivalView.html', lives=controllerClass.survivalModeLives, score=controllerClass.currentScoreSurvival, item=questions)
 
 
 @app.route('/survival', methods=['POST'])
-def ProcessSurvivalQuestion():
+def processSurvivalQuestion():
     if 'submitChoice' in request.form:
         if len(controllerClass.listOFGoodQuestionsAlreadyAdded) != 0:
             controllerClass.listOFGoodQuestionsAlreadyAdded.pop(0)
@@ -74,29 +74,28 @@ def ProcessSurvivalQuestion():
         else:
             controllerClass.survivalModeLives -= 1
         if controllerClass.survivalModeLives < 1:
-            return redirect(url_for('EndGameGet'))
+            return redirect(url_for('endGameGet'))
         return redirect(url_for('survival'))
 
 
 @app.route('/results')
-def ResultMenu():
-    return render_template('ResultView.html', result=controllerClass.answer, goodQuestion=controllerClass.goodQuestions)
+def resultMenu():
+    return render_template('resultView.html', result=controllerClass.answer, goodQuestion=controllerClass.goodQuestions)
 
 
 @app.route('/quiz', methods=['GET'])
-def QuizMenu():
-    #controllerClass.quizModeArray = controllerClass.listOFGoodQuestionsAlreadyAdded[:3]
+def quizMenu():
     controllerClass.quizModeArray = getQuestions(controllerClass.numberOfQuestionsForQuiz)
     totalScore = 0
     for x in controllerClass.quizModeArray:
         totalScore += len(x['options'])
     controllerClass.currentGameMode = "quiz"
-    return render_template('QuizView.html', questions=controllerClass.quizModeArray, totalscore=totalScore)
+    return render_template('quizView.html', questions=controllerClass.quizModeArray, totalscore=totalScore)
 
 
 @app.route('/quiz', methods=['POST'])
 # Here you get what the player chose
-def PostAnswer():
+def postAnswer():
     # When you answer the controllerClass.answer gets the value
     # and you are redirected to another question or to the menu
     if 'submitAns' in request.form:
@@ -126,10 +125,10 @@ def PostAnswer():
         grade = f'{eval(points) * 10:.2f}'
         controllerClass.currentScoreQuiz = [points, eval(grade)]
 
-    return redirect(url_for('EndGameGet'))
+    return redirect(url_for('endGameGet'))
 
 @app.route('/endgame')
-def EndGameGet():
+def endGameGet():
     points = 0
 
     if type(controllerClass.currentScoreQuiz) is list:
@@ -139,11 +138,11 @@ def EndGameGet():
         points = controllerClass.currentScoreSurvival
 
 
-    return render_template('EndGameMenu.html', score=points)
+    return render_template('endGameMenu.html', score=points)
 
 
 @app.route('/endgame', methods=['GET', 'POST'])
-def EndGamePost():
+def endGamePost():
     if 'submitScore' in request.form :
         #no need for nicknames longer than 20
         nickname = request.form.get('nicknamePick')[:20] 
@@ -170,7 +169,7 @@ def getHighScores():
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template('MenuView.html'), 404
+    return render_template('menuView.html'), 404
 
 
 if __name__ == '__main__':
