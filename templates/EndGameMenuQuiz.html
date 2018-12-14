@@ -2,7 +2,8 @@
 
 {% block body %}
 
-<h2>Your score was: {{score}}</h2>
+<h2>Your score was: {{answerRate}}</h2>
+<h2>Your grade: {{grade}}</h2>
 <h3>insert your nickname</h3>
 <form action = "{{ url_for('EndGamePost')}}" method = "post" id="questionForm">
     <input type="text" name="nicknamePick"/>
