@@ -28,6 +28,11 @@ def MenuRedirect():
         return redirect(url_for('RedirectToSurvival'))
     elif 'menu' in request.form:
         return redirect(url_for('MainMenu'))
+    elif 'highScore' in request.form:
+        return redirect(url_for('getHighScores'))
+    else:
+        return redirect(url_for('page_not_found'))
+
 
 
 def getQuestions(numberOfQuestions):
@@ -144,7 +149,7 @@ def EndGamePost():
     return redirect(url_for('getHighScores'))
 
 
-@app.route('/highscore')
+@app.route('/highscore', methods=['GET'])
 def getHighScores():
     return render_template('highscore.html', quiz=controllerClass.getQuizHighScores(), survival=controllerClass.getSurvivalHighScores())
 
