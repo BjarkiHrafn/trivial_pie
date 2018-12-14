@@ -131,11 +131,12 @@ def PostAnswer():
 @app.route('/endgame')
 def EndGameGet():
     points = 0
-    if controllerClass.currentScoreSurvival != 0:
-        points = controllerClass.currentScoreSurvival
-    elif type(controllerClass.currentScoreQuiz) is list:
+
+    if type(controllerClass.currentScoreQuiz) is list:
         points = controllerClass.currentScoreQuiz[0]
         points += '  Your grade is: ' + str(controllerClass.currentScoreQuiz[1])
+    elif controllerClass.currentScoreSurvival != 0:
+        points = controllerClass.currentScoreSurvival
 
 
     return render_template('EndGameMenu.html', score=points)
