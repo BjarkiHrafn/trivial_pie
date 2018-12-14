@@ -116,7 +116,7 @@ def PostAnswer():
                 pass
             points = str(controllerClass.currentScoreQuiz) + '/' + str(totalScore)
             grade = f'{eval(points) * 10:.2f}'
-        controllerClass.currentScoreQuiz = [points, grade]
+        controllerClass.currentScoreQuiz = [points, eval(grade)]
     return redirect(url_for('EndGameGet'))
 
 @app.route('/endgame')
