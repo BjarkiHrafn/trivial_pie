@@ -67,7 +67,6 @@ def processSurvivalQuestion():
         if addToGood:
             controllerClass.addToGoodQuestions(eval(addToGood))
         answer = wholeForm.get('choice')
-        print(answer, file=sys.stderr)
         if answer and eval(answer):
             score = wholeForm.get('points')
             controllerClass.currentScoreSurvival += int(score)
@@ -115,8 +114,6 @@ def postAnswer():
                 #this is the answer the user chose
                 answer = eval(wholeForm['question' + str(i)])
                 if answer[0]:
-                    print(type(answer[1]), file=sys.stderr)
-                    print(type(controllerClass.currentScoreQuiz), file=sys.stderr)
                     controllerClass.currentScoreQuiz += answer[1]
             except KeyError:
                 continue
@@ -150,7 +147,6 @@ def endGamePost():
             score = controllerClass.currentScoreSurvival
         else:
             score = controllerClass.currentScoreQuiz
-        print(score, file=sys.stderr)
         data = {"nickName": nickname, "score": score}
         if data["nickName"].lower() in badWords.bad:
             data["nickName"] = 'Vondurkall'
