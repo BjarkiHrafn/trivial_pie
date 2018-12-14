@@ -14,7 +14,7 @@
                     {% for dict_item in item.options %}
                         <div class="custom-control custom-radio options">
                                 {% set radioGuard = outerIndex|string + loop.index|string %}
-                                <input type="radio" class="custom-control-input" id={{radioGuard}} name="question{{outerIndex}}" value="{{[dict_item[1], item.options|length]}}">
+                                <input type="radio" class="custom-control-input" id={{radioGuard}} name="question{{outerIndex}}" value="{{[dict_item[1], item.options|length|int]}}">
                                 <label class="custom-control-label quizOption" for={{radioGuard}}></label>{{dict_item[0]}}</label>
                         </div>
                     {% endfor %}

@@ -85,8 +85,8 @@ def ResultMenu():
 
 @app.route('/quiz', methods=['GET'])
 def QuizMenu():
-    controllerClass.quizModeArray = controllerClass.listOFGoodQuestionsAlreadyAdded[:3]
-    #controllerClass.quizModeArray = getQuestions(controllerClass.numberOfQuestionsForQuiz)
+    #controllerClass.quizModeArray = controllerClass.listOFGoodQuestionsAlreadyAdded[:3]
+    controllerClass.quizModeArray = getQuestions(controllerClass.numberOfQuestionsForQuiz)
     totalScore = 0
     for x in controllerClass.quizModeArray:
         totalScore += len(x['options'])
@@ -100,6 +100,7 @@ def PostAnswer():
     # When you answer the controllerClass.answer gets the value
     # and you are redirected to another question or to the menu
     if 'submitAns' in request.form:
+        controllerClass.currentScoreQuiz = 0
         wholeForm = request.form
         totalScore = wholeForm.get('totalScore')
         # minus two because of submitans and totalscore
@@ -115,25 +116,27 @@ def PostAnswer():
                 #this is the answer the user chose
                 answer = eval(wholeForm['question' + str(i)])
                 if answer[0]:
+                    print(type(answer[1]), file=sys.stderr)
+                    print(type(controllerClass.currentScoreQuiz), file=sys.stderr)
                     controllerClass.currentScoreQuiz += answer[1]
             except KeyError:
-                pass
-        if controllerClass.currentScoreQuiz != 0:
-            points = str(controllerClass.currentScoreQuiz) + '/' + str(totalScore)
-            print(points, file=sys.stderr)
-            grade = f'{eval(points) * 10:.2f}'
-            controllerClass.currentScoreQuiz = [points, eval(grade)]
+                continue
+        
+        points = str(controllerClass.currentScoreQuiz) + '/' + totalScore
+        grade = f'{eval(points) * 10:.2f}'
+        controllerClass.currentScoreQuiz = [points, eval(grade)]
+
     return redirect(url_for('EndGameGet'))
 
 @app.route('/endgame')
 def EndGameGet():
     points = 0
-    if controllerClass.currentScoreQuiz:
+    if controllerClass.currentScoreSurvival != 0:
+        points = controllerClass.currentScoreSurvival
+    elif type(controllerClass.currentScoreQuiz) is list:
         points = controllerClass.currentScoreQuiz[0]
         points += '  Your grade is: ' + str(controllerClass.currentScoreQuiz[1])
-        
-    if controllerClass.currentScoreSurvival:
-        points = controllerClass.currentScoreSurvival
+
 
     return render_template('EndGameMenu.html', score=points)
 
