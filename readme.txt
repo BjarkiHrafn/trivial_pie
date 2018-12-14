@@ -26,6 +26,10 @@ Getting Started
 Run in localhost
        py app.py
 
+Known Bugs
+       Survival mode does not work correctly
+       Take quiz does not add information correctly to database
+
 Built With
       mlab (https://mlab.com/) - Database-as-a-Service for MongoDB
 
