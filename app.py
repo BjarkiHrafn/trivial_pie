@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, url_for, redirect
 from ControllerClass import Controller
 import sys  # prints to console
-from flask_bootstrap import Bootstrap
 import badWords
 
 app = Flask(__name__)
