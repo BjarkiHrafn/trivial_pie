@@ -91,8 +91,6 @@ def resultMenu():
 
 @app.route('/quiz', methods=['GET'])
 def quizMenu():
-    #reset controllerclass since a new game is started
-    controllerClass.__init__()
     #gets questions equal to the amount of question initialized in the controller class
     controllerClass.quizModeArray = getQuestions(controllerClass.numberOfQuestionsForQuiz)
     totalScore = 0
@@ -108,6 +106,7 @@ def postAnswer():
     # When you answer the controllerClass.answer gets the value
     # and you are redirected to another question or to the menu
     if 'submitAns' in request.form:
+        controllerClass.currentScoreQuiz = 0
         wholeForm = request.form
         totalScore = wholeForm.get('totalScore')
         # minus two because of submitAns and totalscore
